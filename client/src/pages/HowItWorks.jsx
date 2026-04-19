@@ -176,32 +176,67 @@ export default function HowItWorks() {
 
       {/* Elevated FAQ with Ghibli elements */}
       <section className="py-40 relative">
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1464802686167-b939a67e0621?q=80&w=1200" className="w-full h-full object-cover" alt="" />
-        </div>
+        {/* Whimsical Background Elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/5 blur-[120px] rounded-full -mr-32 -mt-32 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-600/5 blur-[120px] rounded-full -ml-32 -mb-32 pointer-events-none" />
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <FadeIn className="text-center mb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <FadeIn className="text-center mb-24">
               <div className="w-20 h-20 bg-gradient-to-br from-violet-500/20 to-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10 shadow-2xl backdrop-blur-md">
                   <Sparkles className="w-10 h-10 text-violet-400 animate-pulse" />
               </div>
-            <h2 className={`font-display text-4xl sm:text-5xl font-black mb-6 ${dark ? 'text-white' : 'text-slate-900'}`}>
+            <h2 className={`font-display text-5xl sm:text-6xl font-black mb-6 ${dark ? 'text-white' : 'text-slate-900'}`}>
               Deep <span className="gradient-text">Knowledge</span> Base
             </h2>
+            <p className={`text-xl ${dark ? 'text-slate-400' : 'text-slate-600'}`}>Everything you need to know about the magic behind the curtain.</p>
           </FadeIn>
-          <StaggerChildren className="space-y-6" staggerDelay={0.1}>
-            {faqs.map(({ q, a }) => (
-              <StaggerItem key={q}>
-                <div className={`p-8 rounded-3xl border transition-all duration-300 hover:border-violet-500/30 group backdrop-blur-md ${dark ? 'bg-[#12121a]/80 border-white/5' : 'bg-white/90 border-slate-200 shadow-sm'}`}>
-                  <h3 className={`text-xl font-bold mb-4 flex gap-4 items-center ${dark ? 'text-white' : 'text-slate-900'}`}>
-                    <div className="w-2.5 h-2.5 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.6)]" />
-                    {q}
-                  </h3>
-                  <p className={`text-base leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{a}</p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              { 
+                q: 'How long does it take to generate?', 
+                a: 'Most dreams are visualized within 30-60 seconds of completing the conversation. Complex multi-scene dreams may take slightly longer.',
+                image: 'https://images.unsplash.com/photo-1508921234172-b68ed335b3e6?q=80&w=400',
+                color: 'from-violet-500/10'
+              },
+              { 
+                q: 'Is my dream data kept private?', 
+                a: 'Absolutely. Your dream data is encrypted, never sold, and you can delete it at any time. We take privacy very seriously.',
+                image: 'https://images.unsplash.com/photo-1436891620584-47fd0e565afb?q=80&w=400',
+                color: 'from-cyan-500/10'
+              },
+              { 
+                q: 'Can I refine the output?', 
+                a: 'Yes! You can ask QuickRaina to adjust any aspect — color palette, mood, style, or specific elements — as many times as you like.',
+                image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=400',
+                color: 'from-pink-500/10'
+              },
+              { 
+                q: 'Do I need any artistic skill?', 
+                a: 'None at all. QuickRaina handles all the creative interpretation. Your only job is to describe what you experienced.',
+                image: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?q=80&w=400',
+                color: 'from-amber-500/10'
+              },
+            ].map(({ q, a, image, color }, idx) => (
+              <FadeIn key={q} delay={idx * 0.1}>
+                <div className={`group relative p-8 rounded-[2rem] border overflow-hidden transition-all duration-300 hover:border-violet-500/30 backdrop-blur-md h-full ${
+                  dark ? 'bg-[#12121a]/80 border-white/5' : 'bg-white border-slate-200 shadow-sm'
+                }`}>
+                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${color} blur-3xl rounded-full opacity-50`} />
+                  
+                  <div className="flex gap-6 items-start relative z-10">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                      <img src={image} className="w-full h-full object-cover" alt="" />
+                    </div>
+                    <div>
+                      <h3 className={`text-xl font-bold mb-3 ${dark ? 'text-white' : 'text-slate-900'}`}>{q}</h3>
+                      <p className={`text-base leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{a}</p>
+                    </div>
+                  </div>
                 </div>
-              </StaggerItem>
+              </FadeIn>
             ))}
-          </StaggerChildren>
+          </div>
 
           <FadeIn delay={0.5} className="mt-24 text-center">
             <Link

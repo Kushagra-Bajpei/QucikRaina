@@ -1,23 +1,17 @@
 import { motion } from 'framer-motion';
-import { Heart, Target, Users, Lightbulb, Award, Globe } from 'lucide-react';
+import { Heart, Target, Users, Lightbulb, Award, Globe, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { FadeIn, StaggerChildren, StaggerItem } from '../components/AnimationWrappers';
 import PublicLayout from '../layouts/PublicLayout';
 
-const team = [
-  { name: 'Aria Solaris', role: 'CEO & Co-Founder', initials: 'AS', color: 'from-violet-500 to-purple-600' },
-  { name: 'Kai Nakamura', role: 'CTO & Co-Founder', initials: 'KN', color: 'from-cyan-500 to-blue-600' },
-  { name: 'Luna Voss', role: 'Head of Design', initials: 'LV', color: 'from-pink-500 to-rose-600' },
-  { name: 'Dex Quill', role: 'Lead AI Engineer', initials: 'DQ', color: 'from-amber-500 to-orange-600' },
-];
-
 const values = [
-  { icon: Heart, title: 'Human-Centered', desc: 'Every feature is designed with empathy and the human experience at its core.' },
-  { icon: Lightbulb, title: 'Innovation First', desc: "We push the boundaries of what's possible with AI and creative technology." },
-  { icon: Users, title: 'Community Driven', desc: 'Our dreamers community shapes the product roadmap and future features.' },
-  { icon: Target, title: 'Privacy Focused', desc: 'Your dreams are sacred. We never share or sell your personal data.' },
-  { icon: Award, title: 'Excellence', desc: 'We hold ourselves to the highest standards in AI accuracy and visual quality.' },
-  { icon: Globe, title: 'Accessible', desc: "Dream visualization should be available to everyone, everywhere on Earth." },
+  { icon: Heart, title: 'Human-Centered', col: 'md:col-span-3 lg:col-span-8', desc: 'Every feature is designed with empathy and the human experience at its core.', image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800' },
+  { icon: Lightbulb, title: 'Innovation', col: 'md:col-span-3 lg:col-span-4', desc: "Pushing the boundaries of what's possible.", image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600' },
+  { icon: Users, title: 'Community', col: 'md:col-span-3 lg:col-span-4', desc: 'Our dreamers shape the product future.', image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=600' },
+  { icon: Target, title: 'Privacy Focused', col: 'md:col-span-3 lg:col-span-8', desc: 'Your dreams are sacred. We never share or sell your personal narrative data.', image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800' },
+  { icon: Award, title: 'Excellence', col: 'md:col-span-3 lg:col-span-6', desc: 'Highest standards in AI accuracy.', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600' },
+  { icon: Globe, title: 'Accessible', col: 'md:col-span-3 lg:col-span-6', desc: "Visualization for everyone, everywhere.", image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600' },
 ];
 
 export default function About() {
@@ -38,104 +32,136 @@ export default function About() {
               <span className="gradient-text">deserves to be seen</span>
             </h1>
             <p className={`text-xl leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
-              QuickRaina was born from a simple question: what if we could see the worlds our minds create while we sleep? We're a team of AI researchers, designers, and dreamers on a mission to bridge the gap between the subconscious and the visual.
+              QuickRaina was born from a simple question: what if we could see the worlds our minds create while we sleep? We're a team of students on a mission to bridge the gap between the subconscious and the visual.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Mission */}
-      <section className={`py-20 ${dark ? 'bg-[#0d0d16]' : 'bg-slate-50'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Student Visionary Mission Section */}
+      <section className={`py-32 relative ${dark ? 'bg-[#0d0d16]' : 'bg-slate-50'}`}>
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-violet-600 blur-[120px] rounded-full" />
+            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-600 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
             <FadeIn direction="right">
-              <div className={`rounded-3xl p-12 ${dark ? 'bg-[#12121a] border border-white/8' : 'bg-white border border-slate-200 shadow-sm'}`}>
-                <div className="text-7xl font-black gradient-text font-display mb-4">2024</div>
-                <div className={`text-lg font-semibold mb-2 ${dark ? 'text-white' : 'text-slate-900'}`}>Founded in San Francisco</div>
-                <p className={`text-sm leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Started by neurologists and AI researchers who realized dreams were the last unexplored creative frontier.
-                </p>
-                <div className="mt-8 grid grid-cols-2 gap-6">
-                  {[['$4.2M', 'Seed Funding'], ['3', 'AI Patents Filed'], ['12', 'Team Members'], ['50K+', 'Beta Users']].map(([val, label]) => (
-                    <div key={label}>
-                      <div className="font-display text-3xl font-bold gradient-text">{val}</div>
-                      <div className={`text-xs mt-1 ${dark ? 'text-slate-500' : 'text-slate-500'}`}>{label}</div>
+              <div className={`relative group rounded-[3.5rem] overflow-hidden border p-1 ${dark ? 'bg-white/5 border-white/10 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'}`}>
+                <div className="relative h-[550px] rounded-[3rem] overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200" 
+                      alt="The Spark" 
+                      className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-50"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/20 to-transparent" />
+                    
+                    <div className="absolute inset-x-12 bottom-12 text-left">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 mb-6 uppercase tracking-[0.2em] backdrop-blur-xl"
+                        >
+                            The Origin Story
+                        </motion.div>
+                        <h3 className="font-display text-4xl font-black text-white mb-6 leading-[1.1]">Born from <span className="gradient-text">Curiosity.</span></h3>
+                        <p className="text-white/70 text-base leading-relaxed mb-8 max-w-lg">
+                            QuickRaina isn't just a project; it's an exploration of the human subconscious. We started with a simple belief: your dreams are the most pure form of creativity you possess.
+                        </p>
+                        <div className="flex gap-4">
+                            <div className="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-2xl">
+                                <div className="text-xl font-black text-white">Student</div>
+                                <div className="text-[10px] uppercase text-slate-500 font-black tracking-widest mt-1">Research Lead</div>
+                            </div>
+                            <div className="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-2xl">
+                                <div className="text-xl font-black text-white">Project</div>
+                                <div className="text-[10px] uppercase text-slate-500 font-black tracking-widest mt-1">Creative Driven</div>
+                            </div>
+                        </div>
                     </div>
-                  ))}
                 </div>
               </div>
             </FadeIn>
 
             <FadeIn direction="left" delay={0.2}>
-              <div>
-                <h2 className={`font-display text-4xl font-bold mb-6 ${dark ? 'text-white' : 'text-slate-900'}`}>
+              <div className="text-left relative">
+                <div className="absolute -top-10 -left-10 w-20 h-20 bg-violet-500/10 blur-2xl rounded-full" />
+                <h2 className={`font-display text-6xl font-black mb-10 leading-[1.1] ${dark ? 'text-white' : 'text-slate-900'}`}>
                   Our <span className="gradient-text">Mission</span>
                 </h2>
-                <p className={`text-base leading-relaxed mb-6 ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  We exist to make the invisible visible. The human mind is the most complex creative engine in existence — dreams are its uncensored output. QuickRaina gives that output a form.
-                </p>
-                <p className={`text-base leading-relaxed mb-6 ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Our AI combines Jungian dream analysis, generative imagery, and conversational intelligence to create an experience unlike anything else available today.
-                </p>
-                <p className={`text-base leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  We're not just building a product — we're creating a new medium for self-expression and psychological exploration.
-                </p>
+                <div className="space-y-8">
+                    <p className={`text-xl leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    We exist to make the invisible visible. The human mind is the most complex creative engine in existence — dreams are its uncensored output. QuickRaina gives that output a form.
+                    </p>
+                    <p className={`text-xl leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    As students of the mind and technology, we're building a bridge between the abstract landscape of your sleep and the vivid reality of digital art.
+                    </p>
+                    <Link to="/how-it-works" className="group/btn inline-flex items-center gap-4 text-violet-400 font-black text-sm uppercase tracking-widest pb-2 border-b-2 border-violet-500/20 hover:border-violet-500 transition-all">
+                        Explore the Subconscious <Target className="w-5 h-5 group-hover/btn:scale-125 transition-transform" />
+                    </Link>
+                </div>
               </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn className="text-center mb-16">
-            <h2 className={`font-display text-4xl font-bold mb-4 ${dark ? 'text-white' : 'text-slate-900'}`}>
+      {/* Extraordinary Bento Values */}
+      <section className="py-40 relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/10 blur-[150px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <FadeIn className="text-center mb-32">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 mb-8 uppercase tracking-widest">
+                  Foundations
+              </div>
+            <h2 className={`font-display text-6xl sm:text-7xl font-black mb-10 ${dark ? 'text-white' : 'text-slate-900'}`}>
               What we <span className="gradient-text">stand for</span>
             </h2>
+            <p className={`text-2xl max-w-2xl mx-auto ${dark ? 'text-slate-400' : 'text-slate-600'}`}>The principles that guide our journey into the dream world.</p>
           </FadeIn>
-          <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
-            {values.map(({ icon: Icon, title, desc }) => (
-              <StaggerItem key={title}>
-                <div className={`p-6 rounded-2xl border transition-all hover:-translate-y-1 duration-300 ${
-                  dark ? 'bg-[#12121a] border-white/8 hover:border-violet-500/30' : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
+          
+          <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-8 auto-rows-[350px]">
+            {values.map(({ icon: Icon, title, desc, image, col }, idx) => (
+              <FadeIn key={title} delay={idx * 0.1} className={col}>
+                <div className={`group relative h-full rounded-[3.5rem] border overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:shadow-[0_45px_100px_-20px_rgba(0,0,0,0.6)] ${
+                  dark ? 'bg-[#12121a]/80 border-white/5 shadow-2x shadow-black/50' : 'bg-white border-slate-200'
                 }`}>
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-white" />
+                  <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-40 transition-opacity duration-1000">
+                    <img src={image} className="w-full h-full object-cover transition-transform duration-[3s] group-hover:scale-110" alt="" />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${dark ? 'from-[#0a0a0f]' : 'from-white'} via-transparent to-transparent`} />
                   </div>
-                  <h3 className={`font-semibold mb-2 ${dark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
-                  <p className={`text-sm leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{desc}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section>
 
-      {/* Team */}
-      <section className={`py-20 ${dark ? 'bg-[#0d0d16]' : 'bg-slate-50'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn className="text-center mb-16">
-            <h2 className={`font-display text-4xl font-bold mb-4 ${dark ? 'text-white' : 'text-slate-900'}`}>
-              Meet the <span className="gradient-text">dreamers</span>
-            </h2>
-            <p className={`${dark ? 'text-slate-400' : 'text-slate-600'}`}>The people building the future of dream visualization.</p>
-          </FadeIn>
-          <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.1}>
-            {team.map(({ name, role, initials, color }) => (
-              <StaggerItem key={name}>
-                <div className={`p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 duration-300 ${
-                  dark ? 'bg-[#12121a] border-white/8' : 'bg-white border-slate-200 shadow-sm'
-                }`}>
-                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-2xl font-bold text-white mx-auto mb-4 shadow-lg`}>
-                    {initials}
+                  <div className="relative z-10 p-12 h-full flex flex-col justify-between text-left">
+                    <div className="flex justify-between items-start">
+                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-transparent border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-violet-500/40 transition-all duration-500 backdrop-blur-md`}>
+                            <Icon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
+                        </div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 group-hover:text-violet-400 transition-colors">
+                            Value {idx + 1}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 className={`font-display text-4xl font-black mb-6 ${dark ? 'text-white' : 'text-slate-900'} group-hover:gradient-text transition-all duration-500`}>{title}</h3>
+                        <p className={`text-lg leading-relaxed max-w-sm ${dark ? 'text-slate-400' : 'text-slate-600'} group-hover:text-white/80 transition-colors`}>{desc}</p>
+                    </div>
+
+                    <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden mt-8">
+                        <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: '100%' }}
+                            transition={{ duration: 1.5, delay: idx * 0.1 }}
+                            className="h-full bg-gradient-to-r from-violet-500 to-cyan-400" 
+                        />
+                    </div>
                   </div>
-                  <div className={`font-semibold mb-1 ${dark ? 'text-white' : 'text-slate-900'}`}>{name}</div>
-                  <div className={`text-sm ${dark ? 'text-slate-500' : 'text-slate-500'}`}>{role}</div>
                 </div>
-              </StaggerItem>
+              </FadeIn>
             ))}
-          </StaggerChildren>
+          </div>
         </div>
       </section>
     </PublicLayout>
