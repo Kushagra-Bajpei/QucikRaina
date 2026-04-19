@@ -52,11 +52,16 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(124,58,237,0.5)]">
-              <Sparkles className="w-5 h-5 text-white" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative group shrink-0">
+              <div className="absolute -inset-2 bg-gradient-to-r from-violet-600/30 to-cyan-500/30 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition duration-500"></div>
+              <img 
+                src="/favicon.png" 
+                alt="QuickRaina Logo" 
+                className="relative w-12 h-12 rounded-2xl object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-2xl"
+              />
             </div>
-            <span className="font-display font-bold text-xl gradient-text">QuickRaina</span>
+            <span className="font-display font-black text-2xl lg:text-3xl gradient-text tracking-tight">QuickRaina</span>
           </Link>
 
           {/* Desktop Links */}
