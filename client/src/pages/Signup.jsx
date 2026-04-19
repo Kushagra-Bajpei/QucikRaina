@@ -53,10 +53,14 @@ export default function Signup() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    const result = signup(form.name, form.email, form.password);
+    const result = await signup(form.name, form.email, form.password);
     setLoading(false);
-    if (result.ok) navigate('/chat');
+    if (result.ok) {
+      // After signup, we might want to navigate to login or home
+      navigate('/login');
+    } else {
+      setErrors({ api: result.error });
+    }
   };
 
   const inputClass = (field) =>

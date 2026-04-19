@@ -12,29 +12,51 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
 
-  const login = (email, password) => {
-    const found = DUMMY_USERS.find(u => u.email === email && u.password === password);
-    if (found) {
-      const userData = { email: found.email, name: found.name };
-      setUser(userData);
-      localStorage.setItem('qr-user', JSON.stringify(userData));
-      return { ok: true };
+  const login = async (email, password) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data);
+        localStorage.setItem('qr-user', JSON.stringify(data));
+        return { ok: true };
+      }
+      return { ok: false, error: data.message };
+    } catch (error) {
+      return { ok: false, error: 'Network error. Is the server running?' };
     }
-    return { ok: false, error: 'Invalid credentials' };
   };
 
-  const signup = (name, email, password) => {
-    if (!name || !email || !password) return { ok: false, error: 'All fields required' };
-    if (password.length < 6) return { ok: false, error: 'Password must be at least 6 characters' };
-    const userData = { email, name };
-    setUser(userData);
-    localStorage.setItem('qr-user', JSON.stringify(userData));
-    return { ok: true };
+  const signup = async (name, email, password) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: name, email, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        // After signup, we might want to sign in automatically or just redirect
+        return { ok: true };
+      }
+      return { ok: false, error: data.message };
+    } catch (error) {
+      return { ok: false, error: 'Network error. Is the server running?' };
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('qr-user');
+  const logout = async () => {
+    try {
+      await fetch('http://localhost:5000/api/auth/signout', { method: 'POST' });
+      setUser(null);
+      localStorage.removeItem('qr-user');
+    } catch (error) {
+      console.error('Logout error', error);
+    }
   };
 
   return (
