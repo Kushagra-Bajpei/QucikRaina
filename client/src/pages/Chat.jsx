@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { API_BASE_URL } from '../config';
 
 function ChatMessage({ msg, dark }) {
   const isUser = msg.role === 'user';
@@ -154,7 +155,7 @@ const Chat = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch('/api/chat/history', { 
+      const res = await fetch(`${API_BASE_URL}/api/chat/history`, { 
         headers: {
           'Authorization': `Bearer ${user?.token}`
         }
@@ -174,7 +175,7 @@ const Chat = () => {
 
   const saveChatToDB = async (newMessages) => {
     try {
-      const res = await fetch('/api/chat/save', {
+      const res = await fetch(`${API_BASE_URL}/api/chat/save`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -217,7 +218,7 @@ const Chat = () => {
         throw new Error('No authentication token found. Please log in again.');
       }
 
-      const response = await fetch('/api/chat/send', {
+      const response = await fetch(`${API_BASE_URL}/api/chat/send`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -269,7 +270,7 @@ const Chat = () => {
   const deleteHistoryItem = async (e, id) => {
     e.stopPropagation();
     try {
-      const res = await fetch(`/api/chat/${id}`, { 
+      const res = await fetch(`${API_BASE_URL}/api/chat/${id}`, { 
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${user?.token}`
@@ -296,7 +297,7 @@ const Chat = () => {
   const saveEdit = async (e, id) => {
     e.stopPropagation();
     try {
-      const res = await fetch('/api/chat/save', {
+      const res = await fetch(`${API_BASE_URL}/api/chat/save`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone, Send, CheckCircle, AlertCircle, Loader } from 'luc
 import { useTheme } from '../hooks/useTheme';
 import { FadeIn, StaggerChildren, StaggerItem } from '../components/AnimationWrappers';
 import PublicLayout from '../layouts/PublicLayout';
+import { API_BASE_URL } from '../config';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@quickraina.ai', href: 'mailto:hello@quickraina.ai' },
@@ -40,7 +41,7 @@ export default function Contact() {
     
     setStatus('loading');
     try {
-      const response = await fetch('/api/contact/submit', {
+      const response = await fetch(`${API_BASE_URL}/api/contact/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
