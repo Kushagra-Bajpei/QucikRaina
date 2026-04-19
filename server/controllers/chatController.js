@@ -126,6 +126,105 @@ const DREAM_CATEGORIES = [
             "Total freedom. Soaring through the clouds signifies your ability to rise above current challenges.",
             "The golden sky of your mind represents clarity and the promise of a peaceful new perspective."
         ]
+    },
+    {
+        id: 'snake',
+        keywords: ["snake", "cobra", "serpent", "python", "reptile"],
+        image: '/images/snake.jpg',
+        replies: [
+            "A snake in a dream often represents transformation or hidden fears surfacing to be healed.",
+            "The serpent is an ancient symbol of shedding the old and awakening to a new wisdom."
+        ]
+    },
+    {
+        id: 'lion',
+        keywords: ["lion", "tiger", "wild animal", "roar", "predator"],
+        image: '/images/lion.jpg',
+        replies: [
+            "The roar of a lion signifies your own untamed power and the courage needed to face a challenge.",
+            "Meeting a wild predator in the dream realm reflects a situation in life where you must stand your ground."
+        ]
+    },
+    {
+        id: 'dog',
+        keywords: ["dog", "puppy", "pet", "barking", "hound"],
+        image: '/images/dog.jpg',
+        replies: [
+            "A loyal companion in a dream reflects your own loyalty and the importance of trust in your relationships.",
+            "A friendly dog represents protection and the simple joys of unconditional love."
+        ]
+    },
+    {
+        id: 'bird',
+        keywords: ["bird", "eagle", "flying bird", "wings", "soaring", "feather"],
+        image: '/images/bird.jpg',
+        replies: [
+            "Birds are messengers from your higher self. An eagle's flight suggests taking a wider view of your life.",
+            "To see wings in your dream is to acknowledge your own desire for spiritual or creative freedom."
+        ]
+    },
+    {
+        id: 'shiva',
+        keywords: ["shiv", "shiva", "mahadev", "bholenath", "adishakti"],
+        image: '/images/shiva.jpg',
+        replies: [
+            "The presence of Lord Shiva represents the dance of destruction and creation—the power of transformation.",
+            "Gazing upon Mahadev suggests you are seeking stillness and a deep connection to the eternal."
+        ]
+    },
+    {
+        id: 'radha-krishna',
+        keywords: ["krishna", "radha", "radha krishna", "love divine", "flute", "vrindavan"],
+        image: '/images/radha-krishna.jpg',
+        replies: [
+            "Glimpsing Radha and Krishna in your dreams represents the ultimate union of the individual soul with the divine love.",
+            "The sound of the flute in Vrindavan is a call to return to your truest, most joyful state of being."
+        ]
+    },
+    {
+        id: 'god',
+        keywords: ["vishnu", "krishna", "ram", "god", "temple", "divine", "blessing", "deity", "spiritual"],
+        image: '/images/god.jpg',
+        replies: [
+            "Stepping into a temple or meeting the divine represents a search for ultimate truth and inner peace.",
+            "A blessing in the dream realm signifies that you are protected and guided on your path."
+        ]
+    },
+    {
+        id: 'chase',
+        keywords: ["chasing", "running", "escape", "danger", "running away", "following me"],
+        image: '/images/chase.jpg',
+        replies: [
+            "Being chased reflects something in your waking life that you are not yet ready to confront.",
+            "The act of running in a dream suggests an urgency to move forward or a fear of being held back."
+        ]
+    },
+    {
+        id: 'fall',
+        keywords: ["falling", "fall", "height", "cliff", "drop", "stumble"],
+        image: '/images/fall.jpg',
+        replies: [
+            "Falling represents a loss of control or a fear of failure. It is an invitation to let go and trust the path.",
+            "The sensation of falling often precedes a shift in consciousness—a descent into deeper understanding."
+        ]
+    },
+    {
+        id: 'fire',
+        keywords: ["fire", "burning", "explosion", "flames", "smoke", "heat"],
+        image: '/images/fire.jpg',
+        replies: [
+            "Fire is a powerful symbol of purification. It burns away the old to make room for the new.",
+            "An explosion in the dream realm reflects intense emotions or a sudden breakthrough in your waking life."
+        ]
+    },
+    {
+        id: 'horror',
+        keywords: ["dark", "ghost", "horror", "scary", "monster", "nightmare", "demon", "creepy"],
+        image: '/images/horror.jpg',
+        replies: [
+            "Encountering shadows in your dream is a way of integrating your fears into your strength.",
+            "A scary vision is often a doorway; once you face the monster, it loses its power over you."
+        ]
     }
 ];
 
