@@ -1,55 +1,43 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Sparkles, Send, Plus, Menu, X, Moon, Sun, LogOut,
-  MessageSquare, Trash2, ChevronDown, Copy, Check, User, Mic
+import { 
+  Send, 
+  Sparkles, 
+  User, 
+  Trash2, 
+  Image as ImageIcon, 
+  Plus, 
+  History, 
+  Search,
+  MoreVertical,
+  LogOut,
+  Moon,
+  Sun,
+  Copy,
+  Check,
+  ChevronRight,
+  MessageSquare,
+  Mic,
+  Settings,
+  HelpCircle
 } from 'lucide-react';
-import { useTheme } from '../hooks/useTheme';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { generateAIResponse, formatTimestamp, generateId } from '../utils/chatUtils';
-
-const INITIAL_HISTORY = [
-  { id: generateId(), title: 'Flying over neon city', preview: 'I was soaring above a city...', date: 'Yesterday' },
-  { id: generateId(), title: 'Ocean of mirrors', preview: 'The water reflected everything...', date: 'Yesterday' },
-  { id: generateId(), title: 'Forest of crystal trees', preview: 'Each tree was made of glass...', date: '2 days ago' },
-  { id: generateId(), title: 'Meeting my future self', preview: 'I saw myself but older...', date: '3 days ago' },
-];
-
-const WELCOME_MSG = {
-  id: 'welcome',
-  role: 'ai',
-  text: "Hello, dreamer! ✨ I'm QuickRaina, your AI dream visualization companion. Tell me about a dream you'd like to explore, and I'll help bring it to life. What did you dream about?",
-  timestamp: new Date(),
-};
-
-function TypingIndicator({ dark }) {
-  return (
-    <div className="flex items-end gap-3">
-      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg">
-        <Sparkles className="w-4 h-4 text-white" />
-      </div>
-      <div className={`px-5 py-4 rounded-2xl rounded-bl-sm ${dark ? 'bg-[#1a1a2e] border border-white/8' : 'bg-slate-100'}`}>
-        <div className="flex gap-1.5 items-center h-4">
-          {[0, 1, 2].map(i => (
-            <span
-              key={i}
-              className="w-2 h-2 rounded-full bg-violet-400"
-              style={{ animation: `typing-dot 1.2s ease-in-out ${i * 0.2}s infinite` }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function ChatMessage({ msg, dark }) {
-  const [copied, setCopied] = useState(false);
   const isUser = msg.role === 'user';
+  const [copied, setCopied] = useState(false);
+
+  const formatTimestamp = (date) => {
+    return new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }).format(date);
+  };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(msg.text);
+    navigator.clipboard.writeText(msg.text.trim());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -72,8 +60,8 @@ function ChatMessage({ msg, dark }) {
         </div>
       )}
 
-      {/* Bubble */}
-      <div className={`group flex flex-col max-w-[75%] sm:max-w-[65%] ${isUser ? 'items-end' : 'items-start'}`}>
+      {/* Bubble & Image */}
+      <div className={`group flex flex-col max-w-[85%] sm:max-w-[70%] ${isUser ? 'items-end' : 'items-start'}`}>
         <div
           className={`relative px-5 py-3.5 rounded-2xl leading-relaxed text-sm ${
             isUser
@@ -83,8 +71,8 @@ function ChatMessage({ msg, dark }) {
               : 'bg-slate-100 text-slate-800 rounded-bl-sm'
           }`}
         >
-          {msg.text}
-          {/* Copy button */}
+          {msg.text.trim()}
+          
           <button
             onClick={handleCopy}
             className={`absolute -top-2 ${isUser ? '-left-2' : '-right-2'} opacity-0 group-hover:opacity-100 transition-all duration-200 w-6 h-6 rounded-md flex items-center justify-center ${dark ? 'bg-[#0a0a0f] border border-white/10 text-slate-400' : 'bg-white border border-slate-200 text-slate-500'} shadow-sm hover:scale-110`}
@@ -92,6 +80,37 @@ function ChatMessage({ msg, dark }) {
             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
           </button>
         </div>
+
+        {/* Generated Image Block */}
+        {msg.image && (
+          <div className="mt-4 relative w-full group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/30 to-cyan-500/30 rounded-[2rem] blur-lg"></div>
+            <div className="relative rounded-[1.8rem] overflow-hidden border border-white/10 bg-[#0a0a0f] shadow-2xl">
+              <img 
+                src={msg.image}
+                alt="Dream visualization"
+                className="w-full h-auto aspect-square object-cover"
+                loading="eager"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div 
+                style={{ display: 'none' }}
+                className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900"
+              >
+                <Sparkles className="w-8 h-8 text-violet-500/50 mb-3" />
+                <p className="text-xs text-slate-400">Visualization ready, but the connection is slow. Please wait a moment.</p>
+              </div>
+              
+              <div className="absolute top-4 right-4 px-2 py-1 bg-black/50 backdrop-blur-md rounded border border-white/10">
+                <span className="text-[9px] text-violet-300 font-bold uppercase tracking-widest">4K Vision</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <span className={`text-xs mt-1 px-1 ${dark ? 'text-slate-600' : 'text-slate-400'}`}>
           {formatTimestamp(msg.timestamp)}
         </span>
@@ -100,308 +119,265 @@ function ChatMessage({ msg, dark }) {
   );
 }
 
-export default function Chat() {
-  const { dark, toggleTheme } = useTheme();
+const Chat = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  const [messages, setMessages] = useState([WELCOME_MSG]);
+  const [messages, setMessages] = useState([
+    { id: '1', role: 'ai', text: "Hello, dreamer! ✨ I'm QuickRaina, your AI dream visualization companion. Tell me about a dream you'd like to explore, and I'll help bring it to life. What did you dream about?", timestamp: new Date() }
+  ]);
   const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dark, setDark] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [chatHistory, setChatHistory] = useState(INITIAL_HISTORY);
-  const [activeChatId, setActiveChatId] = useState(null);
-
   const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
-  const textareaRef = useRef(null);
 
-  // Redirect if not logged in
   useEffect(() => {
     if (!user) navigate('/login');
   }, [user, navigate]);
 
-  useEffect(() => {
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
+  };
 
-  const handleSend = async () => {
-    const text = input.trim();
-    if (!text || isTyping) return;
-    setInput('');
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
-    const userMsg = { id: generateId(), role: 'user', text, timestamp: new Date() };
+  const generateId = () => Math.random().toString(36).substring(2, 9);
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMsg = { id: generateId(), role: 'user', text: input, timestamp: new Date() };
     setMessages(prev => [...prev, userMsg]);
-    setIsTyping(true);
+    const currentInput = input;
+    setInput('');
+    setIsLoading(true);
 
     try {
-      const aiText = await generateAIResponse(text);
-      const aiMsg = { id: generateId(), role: 'ai', text: aiText, timestamp: new Date() };
-      setMessages(prev => [...prev, aiMsg]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
+      const currentMessages = [...messages, userMsg];
+      const response = await fetch('/api/chat/send', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ 
+          messages: currentMessages.map(m => ({ role: m.role, content: m.text })) 
+        })
+      });
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  const handleNewChat = () => {
-    if (messages.length > 1) {
-      const firstUserMsg = messages.find(m => m.role === 'user');
-      if (firstUserMsg) {
-        setChatHistory(prev => [{
-          id: generateId(),
-          title: firstUserMsg.text.slice(0, 40) + (firstUserMsg.text.length > 40 ? '...' : ''),
-          preview: firstUserMsg.text,
-          date: 'Today',
-        }, ...prev]);
+      if (response.ok) {
+        const data = await response.json();
+        setMessages(prev => [...prev, { 
+          id: generateId(), 
+          role: 'ai', 
+          text: data.reply, 
+          image: data.image,
+          timestamp: new Date() 
+        }]);
+      } else {
+        const errorMsg = { 
+          id: generateId(), 
+          role: 'ai', 
+          text: "I'm having trouble connecting to the dream realm right now. Please try again in a moment.", 
+          timestamp: new Date() 
+        };
+        setMessages(prev => [...prev, errorMsg]);
       }
+    } catch (error) {
+      console.error('Chat Error:', error);
+    } finally {
+      setIsLoading(false);
     }
-    setMessages([{ ...WELCOME_MSG, id: generateId(), timestamp: new Date() }]);
-    setActiveChatId(null);
-    setInput('');
   };
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/login');
   };
 
-  const suggestedPrompts = [
-    "I was flying over a glowing purple galaxy...",
-    "I dreamed of a forest made of crystal...",
-    "There was an endless ocean of liquid silver...",
+  const recentDreams = [
+    { title: "Flying over neon city", time: "Yesterday" },
+    { title: "Ocean of mirrors", time: "Yesterday" },
+    { title: "Forest of crystal trees", time: "2 days ago" },
+    { title: "Meeting my future self", time: "3 days ago" }
   ];
 
-  if (!user) return null;
-
   return (
-    <div className={`flex h-screen overflow-hidden ${dark ? 'bg-[#0a0a0f]' : 'bg-slate-50'}`}>
+    <div className={`flex h-screen overflow-hidden ${dark ? 'bg-[#050508] text-white' : 'bg-slate-50 text-slate-800'} transition-colors duration-300`}>
       {/* Sidebar */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {sidebarOpen && (
-          <motion.aside
+          <motion.div
             initial={{ x: -300, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className={`flex flex-col w-72 flex-shrink-0 border-r h-full z-30 ${
-              dark ? 'bg-[#0d0d16] border-white/10' : 'bg-white border-slate-200'
-            }`}
+            className={`w-72 h-full flex-shrink-0 flex flex-col border-r ${dark ? 'bg-[#0a0a0f] border-white/10' : 'bg-white border-slate-200'} z-50`}
           >
-            {/* Sidebar Header */}
-            <div className={`flex items-center justify-between px-4 py-4 border-b ${dark ? 'border-white/10' : 'border-slate-100'}`}>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center shadow-[0_0_16px_rgba(124,58,237,0.4)]">
-                  <Sparkles className="w-4 h-4 text-white" />
+            <div className="p-6 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-display font-bold text-lg gradient-text">QuickRaina</span>
+                <span className="font-bold text-lg tracking-tight">QuickRaina</span>
               </div>
-              <button onClick={() => setSidebarOpen(false)} className={`p-1.5 rounded-lg ${dark ? 'text-slate-500 hover:text-white hover:bg-white/10' : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'} transition-all`}>
-                <X className="w-4 h-4" />
+              <button onClick={() => setSidebarOpen(false)} className={`sm:hidden p-1 rounded-md ${dark ? 'hover:bg-white/5' : 'hover:bg-slate-100'}`}>
+                <Plus className="w-5 h-5 rotate-45" />
               </button>
             </div>
 
-            {/* New Chat */}
-            <div className="px-3 pt-4 pb-2">
-              <button
-                id="new-chat-btn"
-                onClick={handleNewChat}
-                className="w-full flex items-center gap-2 px-4 py-3 rounded-xl border bg-gradient-to-r from-violet-600/10 to-cyan-500/10 border-violet-500/20 text-violet-400 text-sm font-semibold hover:border-violet-500/40 hover:from-violet-600/20 hover:to-cyan-500/20 transition-all duration-300 group"
+            <div className="px-4 mb-4">
+              <button 
+                onClick={() => setMessages([{ id: generateId(), role: 'ai', text: "Ready for a new exploration. What did you dream about?", timestamp: new Date() }])}
+                className="w-full flex items-center gap-2 px-4 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-medium transition-all shadow-lg shadow-violet-600/20"
               >
-                <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
-                New Dream Chat
+                <Plus className="w-4 h-4" />
+                <span>New Dream Chat</span>
               </button>
             </div>
 
-            {/* Chat History */}
-            <div className="flex-1 overflow-y-auto px-3 py-2">
-              <div className={`text-xs font-semibold uppercase tracking-wide px-2 py-2 ${dark ? 'text-slate-600' : 'text-slate-400'}`}>
-                Recent Dreams
-              </div>
-              <div className="space-y-1">
-                {chatHistory.map((chat) => (
-                  <button
-                    key={chat.id}
-                    onClick={() => setActiveChatId(chat.id)}
-                    className={`w-full text-left px-3 py-3 rounded-xl group transition-all flex items-start gap-2 ${
-                      activeChatId === chat.id
-                        ? 'bg-violet-500/10 border border-violet-500/20'
-                        : dark ? 'hover:bg-white/5' : 'hover:bg-slate-50'
-                    }`}
-                  >
-                    <MessageSquare className={`w-4 h-4 mt-0.5 flex-shrink-0 ${activeChatId === chat.id ? 'text-violet-400' : dark ? 'text-slate-600' : 'text-slate-400'}`} />
-                    <div className="min-w-0 flex-1">
-                      <div className={`text-xs font-medium truncate ${dark ? (activeChatId === chat.id ? 'text-white' : 'text-slate-300') : 'text-slate-700'}`}>
-                        {chat.title}
-                      </div>
-                      <div className={`text-xs mt-0.5 ${dark ? 'text-slate-600' : 'text-slate-400'}`}>{chat.date}</div>
-                    </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setChatHistory(prev => prev.filter(c => c.id !== chat.id)); }}
-                      className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-600 hover:text-red-400 transition-all"
+            <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6">
+              <div>
+                <p className={`text-[10px] font-bold uppercase tracking-widest mb-3 ${dark ? 'text-slate-500' : 'text-slate-400'}`}>Recent Dreams</p>
+                <div className="space-y-1">
+                  {recentDreams.map((dream, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors ${dark ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-100 text-slate-600'}`}
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </button>
-                ))}
+                      <MessageSquare className="w-4 h-4 opacity-50" />
+                      <div className="flex-1 truncate">
+                        <p className="truncate">{dream.title}</p>
+                        <p className="text-[10px] opacity-50">{dream.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Sidebar Footer */}
-            <div className={`border-t px-3 py-4 space-y-1 ${dark ? 'border-white/10' : 'border-slate-100'}`}>
-              <button
-                onClick={toggleTheme}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${dark ? 'text-slate-400 hover:bg-white/5 hover:text-white' : 'text-slate-600 hover:bg-slate-50'}`}
-              >
-                {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                {dark ? 'Light Mode' : 'Dark Mode'}
-              </button>
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-red-400 hover:bg-red-500/10 transition-all"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </button>
+            <div className={`p-4 border-t ${dark ? 'border-white/10' : 'border-slate-200'}`}>
+              <div className="space-y-1">
+                <button 
+                  onClick={() => setDark(!dark)}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${dark ? 'hover:bg-white/5' : 'hover:bg-slate-100'}`}
+                >
+                  {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                  <span>{dark ? 'Light Mode' : 'Dark Mode'}</span>
+                </button>
+                <button 
+                  onClick={handleLogout}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-400/10 transition-colors`}
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
             </div>
-          </motion.aside>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Chat */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Chat Header */}
-        <div className={`flex items-center justify-between px-4 py-3.5 border-b flex-shrink-0 ${dark ? 'bg-[#0d0d16] border-white/10' : 'bg-white border-slate-200'}`}>
-          <div className="flex items-center gap-3">
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col relative h-full">
+        {/* Top Header */}
+        <header className={`h-16 flex items-center justify-between px-6 border-b ${dark ? 'border-white/10 bg-[#050508]/80' : 'bg-white/80 border-slate-200'} backdrop-blur-md sticky top-0 z-40`}>
+          <div className="flex items-center gap-4">
             {!sidebarOpen && (
-              <button
+              <button 
                 onClick={() => setSidebarOpen(true)}
-                className={`p-2 rounded-lg ${dark ? 'text-slate-400 hover:text-white hover:bg-white/10' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'} transition-all`}
+                className={`p-2 rounded-lg ${dark ? 'hover:bg-white/5' : 'hover:bg-slate-100'}`}
               >
-                <Menu className="w-5 h-5" />
+                <Sparkles className="w-5 h-5 text-violet-500" />
               </button>
             )}
-            <div className="flex items-center gap-2.5">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center shadow-lg">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-[#0d0d16]" />
-              </div>
-              <div>
-                <div className={`text-sm font-semibold ${dark ? 'text-white' : 'text-slate-900'}`}>QuickRaina</div>
-                <div className="flex items-center gap-1 text-xs text-green-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  Online
-                </div>
+            <div className="flex flex-col">
+              <h2 className="font-bold text-sm">QuickRaina</h2>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <span className="text-[10px] text-green-500 font-medium">Online</span>
               </div>
             </div>
           </div>
-
-          <div className="flex items-center gap-2">
-            <div className={`hidden sm:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full ${dark ? 'bg-white/5 text-slate-400' : 'bg-slate-100 text-slate-500'}`}>
-              <User className="w-3 h-3" />
-              {user?.name}
-            </div>
-            <button onClick={toggleTheme} className={`p-2 rounded-lg transition-all ${dark ? 'text-slate-400 hover:text-white hover:bg-white/10' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'}`}>
-              {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
+          <div className="flex items-center gap-3">
+             <div className={`p-2 rounded-lg ${dark ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}>
+               <User className="w-5 h-5" />
+             </div>
+             <div className={`p-2 rounded-lg ${dark ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}>
+               <Sun className="w-5 h-5" />
+             </div>
           </div>
-        </div>
+        </header>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-5" ref={messagesEndRef}>
-          <div className="max-w-3xl mx-auto space-y-5">
-            <AnimatePresence>
-              {messages.map(msg => (
-                <ChatMessage key={msg.id} msg={msg} dark={dark} />
-              ))}
-            </AnimatePresence>
-
-            {isTyping && <TypingIndicator dark={dark} />}
-            <div ref={messagesEndRef} />
-
-            {/* Suggested prompts */}
-            {messages.length === 1 && !isTyping && (
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4"
-              >
-                {suggestedPrompts.map(prompt => (
-                  <button
-                    key={prompt}
-                    onClick={() => setInput(prompt)}
-                    className={`text-left p-4 rounded-xl border text-sm transition-all hover:-translate-y-0.5 duration-200 ${
-                      dark ? 'bg-[#12121a] border-white/8 text-slate-400 hover:border-violet-500/30 hover:text-white' : 'bg-white border-slate-200 text-slate-600 hover:border-violet-300 hover:text-slate-900 shadow-sm'
-                    }`}
-                  >
-                    "{prompt}"
-                  </button>
-                ))}
-              </motion.div>
+        <main className="flex-1 overflow-y-auto px-4 py-8 custom-scrollbar">
+          <div className="max-w-3xl mx-auto space-y-8">
+            {messages.map((msg) => (
+              <ChatMessage key={msg.id} msg={msg} dark={dark} />
+            ))}
+            {isLoading && (
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center animate-pulse">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <div className={`flex gap-1.5 px-4 py-3 rounded-2xl ${dark ? 'bg-white/5' : 'bg-slate-100'}`}>
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
-        </div>
+        </main>
 
-        {/* Input Area */}
-        <div className={`flex-shrink-0 border-t px-4 py-4 ${dark ? 'bg-[#0d0d16] border-white/10' : 'bg-white border-slate-200'}`}>
-          <div className="max-w-3xl mx-auto">
-            <div className={`relative flex items-end gap-3 p-2 rounded-2xl border transition-all duration-300 ${
-              dark ? 'bg-white/5 border-white/10 focus-within:border-violet-500/50 focus-within:shadow-[0_0_20px_rgba(124,58,237,0.15)]' : 'bg-slate-50 border-slate-200 focus-within:border-violet-300 focus-within:shadow-[0_0_20px_rgba(124,58,237,0.08)]'
-            }`}>
+        {/* Input Bar */}
+        <div className={`p-6 border-t ${dark ? 'border-white/10 bg-[#050508]/80' : 'bg-white border-slate-200'} backdrop-blur-md`}>
+          <div className="max-w-3xl mx-auto relative">
+            <form 
+              onSubmit={handleSend}
+              className={`relative flex items-center rounded-2xl p-1.5 transition-all duration-300 border ${dark ? 'bg-[#0f0f1a] border-white/10 focus-within:border-violet-500/50' : 'bg-white border-slate-200 focus-within:border-violet-500'} shadow-2xl`}
+            >
               <textarea
-                ref={textareaRef}
-                id="chat-input"
                 value={input}
-                onChange={e => {
-                  setInput(e.target.value);
-                  e.target.style.height = 'auto';
-                  e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend(e);
+                  }
                 }}
-                onKeyDown={handleKeyDown}
                 placeholder="Describe your dream..."
-                rows={1}
-                disabled={isTyping}
-                className={`flex-1 bg-transparent outline-none resize-none text-sm px-2 py-2 max-h-[120px] ${dark ? 'text-white placeholder-slate-600' : 'text-slate-900 placeholder-slate-400'} disabled:opacity-50`}
-                style={{ height: '40px' }}
+                className={`flex-1 bg-transparent px-4 py-3 text-sm focus:outline-none resize-none max-h-32 min-h-[44px] ${dark ? 'text-white' : 'text-slate-800'}`}
+                rows="1"
               />
-              <div className="flex items-center gap-1.5 pb-1">
-                <button
-                  className={`p-2 rounded-lg transition-colors ${dark ? 'text-slate-600 hover:text-slate-400' : 'text-slate-400 hover:text-slate-600'}`}
-                  title="Voice input (coming soon)"
-                >
-                  <Mic className="w-4 h-4" />
+              <div className="flex items-center gap-1 pr-1">
+                <button type="button" className={`p-2 rounded-xl transition-colors ${dark ? 'hover:bg-white/5 text-slate-500' : 'hover:bg-slate-100 text-slate-400'}`}>
+                  <Mic className="w-5 h-5" />
                 </button>
-                <motion.button
-                  id="send-btn"
-                  onClick={handleSend}
-                  disabled={!input.trim() || isTyping}
-                  whileHover={{ scale: input.trim() ? 1.05 : 1 }}
-                  whileTap={{ scale: input.trim() ? 0.95 : 1 }}
-                  className={`p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center ${
-                    input.trim() && !isTyping
-                      ? 'bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40'
-                      : dark ? 'bg-white/5 text-slate-600' : 'bg-slate-100 text-slate-400'
+                <button 
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className={`p-2.5 rounded-xl transition-all ${
+                    input.trim() && !isLoading 
+                    ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/30 hover:scale-105 active:scale-95' 
+                    : 'text-slate-600 cursor-not-allowed opacity-50'
                   }`}
                 >
-                  <Send className="w-4 h-4" />
-                </motion.button>
+                  <Send className="w-5 h-5" />
+                </button>
               </div>
-            </div>
-            <p className={`text-center text-xs mt-2 ${dark ? 'text-slate-700' : 'text-slate-400'}`}>
-              Press Enter to send · Shift+Enter for new line
+            </form>
+            <p className={`text-center text-[10px] mt-3 ${dark ? 'text-slate-600' : 'text-slate-400'}`}>
+              Press Enter to send • Shift+Enter for new line
             </p>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Chat;

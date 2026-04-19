@@ -3,8 +3,10 @@ import { errorHandler } from './error.js';
 
 export const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token;
+    console.log('Cookies received:', req.cookies);
 
     if (!token) {
+        console.log('No access_token found');
         return next(errorHandler(401, 'Unauthorized'));
     }
 

@@ -1,13 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import dreamRoutes from './routes/dreamRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-
-dotenv.config();
+import chatRoutes from './routes/chatRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,6 +31,8 @@ app.use(cors({
 app.use('/api/auth', authRoutes);
 app.use('/api/dream', dreamRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Health check
 app.get('/', (req, res) => {

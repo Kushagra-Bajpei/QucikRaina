@@ -37,9 +37,27 @@ export default function Contact() {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    
     setStatus('loading');
-    await new Promise(r => setTimeout(r, 2000));
-    setStatus('success');
+    try {
+      const response = await fetch('/api/contact/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setErrors({ submit: data.message || 'Something went wrong' });
+        setStatus('error');
+      }
+    } catch (error) {
+      setErrors({ submit: 'Failed to connect to the server' });
+      setStatus('error');
+    }
   };
 
   const inputClass = (field) =>
