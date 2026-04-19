@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/signin', {
+      const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -33,14 +33,13 @@ export function AuthProvider({ children }) {
 
   const signup = async (name, email, password) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: name, email, password }),
       });
       const data = await res.json();
       if (res.ok) {
-        // After signup, we might want to sign in automatically or just redirect
         return { ok: true };
       }
       return { ok: false, error: data.message };
@@ -51,11 +50,18 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/signout', { method: 'POST' });
+      await fetch('/api/auth/signout', { 
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${user?.token}`
+        }
+      });
       setUser(null);
       localStorage.removeItem('qr-user');
     } catch (error) {
       console.error('Logout error', error);
+      setUser(null);
+      localStorage.removeItem('qr-user');
     }
   };
 

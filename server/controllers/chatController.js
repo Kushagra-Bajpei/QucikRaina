@@ -2,6 +2,114 @@
 // Extended Dream categories for humanitarian and realistic dream experiences
 const DREAM_CATEGORIES = [
     {
+        id: 'radha-krishna',
+        keywords: ["krishna", "radha", "radha krishna", "love divine", "flute", "vrindavan"],
+        image: '/images/radha-krishna.jpg',
+        replies: [
+            "Glimpsing Radha and Krishna in your dreams represents the ultimate union of the individual soul with the divine love.",
+            "The sound of the flute in Vrindavan is a call to return to your truest, most joyful state of being."
+        ]
+    },
+    {
+        id: 'shiva',
+        keywords: ["shiv", "shiva", "mahadev", "bholenath", "adishakti"],
+        image: '/images/shiva.jpg',
+        replies: [
+            "The presence of Lord Shiva represents the dance of destruction and creation—the power of transformation.",
+            "Gazing upon Mahadev suggests you are seeking stillness and a deep connection to the eternal."
+        ]
+    },
+    {
+        id: 'god',
+        keywords: ["vishnu", "krishna", "ram", "god", "temple", "divine", "blessing", "deity", "spiritual"],
+        image: '/images/god.jpg',
+        replies: [
+            "Stepping into a temple or meeting the divine represents a search for ultimate truth and inner peace.",
+            "A blessing in the dream realm signifies that you are protected and guided on your path."
+        ]
+    },
+    {
+        id: 'horror',
+        keywords: ["ghost", "horror", "scary", "monster", "nightmare", "demon", "creepy", "spirit"],
+        image: '/images/horror.jpg',
+        replies: [
+            "Encountering shadows in your dream is a way of integrating your fears into your strength.",
+            "A scary vision is often a doorway; once you face the monster, it loses its power over you."
+        ]
+    },
+    {
+        id: 'chase',
+        keywords: ["chasing", "running", "escape", "danger", "running away", "following me"],
+        image: '/images/chase.jpg',
+        replies: [
+            "Being chased reflects something in your waking life that you are not yet ready to confront.",
+            "The act of running in a dream suggests an urgency to move forward or a fear of being held back."
+        ]
+    },
+    {
+        id: 'fire',
+        keywords: ["fire", "burning", "explosion", "flames", "smoke", "heat"],
+        image: '/images/fire.jpg',
+        replies: [
+            "Fire is a powerful symbol of purification. It burns away the old to make room for the new.",
+            "An explosion in the dream realm reflects intense emotions or a sudden breakthrough in your waking life."
+        ]
+    },
+    {
+        id: 'fall',
+        keywords: ["falling", "fall", "height", "cliff", "drop", "stumble"],
+        image: '/images/fall.jpg',
+        replies: [
+            "Falling represents a loss of control or a fear of failure. It is an invitation to let go and trust the path.",
+            "The sensation of falling often precedes a shift in consciousness—a descent into deeper understanding."
+        ]
+    },
+    {
+        id: 'snake',
+        keywords: ["snake", "cobra", "serpent", "python", "reptile"],
+        image: '/images/snake.jpg',
+        replies: [
+            "A snake in a dream often represents transformation or hidden fears surfacing to be healed.",
+            "The serpent is an ancient symbol of shedding the old and awakening to a new wisdom."
+        ]
+    },
+    {
+        id: 'lion',
+        keywords: ["lion", "tiger", "wild animal", "roar", "predator"],
+        image: '/images/lion.jpg',
+        replies: [
+            "The roar of a lion signifies your own untamed power and the courage needed to face a challenge.",
+            "Meeting a wild predator in the dream realm reflects a situation in life where you must stand your ground."
+        ]
+    },
+    {
+        id: 'whale',
+        keywords: ["whale"],
+        image: '/images/whale.jpg',
+        replies: [
+            "A majestic whale represents deep wisdom and a massive emotional breakthrough surfacing from the depths.",
+            "The ancient spirit of the ocean is speaking to you through this powerful vision."
+        ]
+    },
+    {
+        id: 'bird',
+        keywords: ["bird", "eagle", "flying bird", "wings", "soaring", "feather"],
+        image: '/images/bird.jpg',
+        replies: [
+            "Birds are messengers from your higher self. An eagle's flight suggests taking a wider view of your life.",
+            "To see wings in your dream is to acknowledge your own desire for spiritual or creative freedom."
+        ]
+    },
+    {
+        id: 'dog',
+        keywords: ["dog", "puppy", "pet", "barking", "hound"],
+        image: '/images/dog.jpg',
+        replies: [
+            "A loyal companion in a dream reflects your own loyalty and the importance of trust in your relationships.",
+            "A friendly dog represents protection and the simple joys of unconditional love."
+        ]
+    },
+    {
         id: 'romantic',
         keywords: ["girl", "love", "date", "park", "couple", "romantic", "boyfriend", "girlfriend", "kiss", "wedding"],
         image: '/images/romantic.jpg',
@@ -56,15 +164,6 @@ const DREAM_CATEGORIES = [
         ]
     },
     {
-        id: 'night',
-        keywords: ["alone", "dark", "night", "lonely", "sad", "thinking", "quiet", "shadows", "melancholy"],
-        image: '/images/night.jpg',
-        replies: [
-            "The quiet dark is a space for deep reflection. It is where you meet your most honest self.",
-            "Being alone under the night sky represents the peace that comes when you embrace your own depths."
-        ]
-    },
-    {
         id: 'fantasy',
         keywords: ["magic", "powers", "flying", "superhero", "dragon", "wizard", "spells", "enchanted", "floating"],
         image: '/images/fantasy.jpg',
@@ -74,12 +173,21 @@ const DREAM_CATEGORIES = [
         ]
     },
     {
-        id: 'whale',
-        keywords: ["whale"],
-        image: '/images/whale.jpg',
+        id: 'space',
+        keywords: ["space", "galaxy", "stars", "aurora", "universe", "planet", "astronomy", "cosmic"],
+        image: '/images/space.jpg',
         replies: [
-            "A majestic whale represents deep wisdom and a massive emotional breakthrough surfacing from the depths.",
-            "The ancient spirit of the ocean is speaking to you through this powerful vision."
+            "Your consciousness is reaching for the stars. To dream of space is to touch the infinite.",
+            "In the cosmic silence, you realize that you are both the dreamer and the universe itself."
+        ]
+    },
+    {
+        id: 'sky',
+        keywords: ["sky", "clouds", "air", "summit", "flying", "atmosphere"],
+        image: '/images/sky.jpg',
+        replies: [
+            "Total freedom. Soaring through the clouds signifies your ability to rise above current challenges.",
+            "The golden sky of your mind represents clarity and the promise of a peaceful new perspective."
         ]
     },
     {
@@ -110,128 +218,22 @@ const DREAM_CATEGORIES = [
         ]
     },
     {
-        id: 'space',
-        keywords: ["space", "galaxy", "stars", "aurora", "universe", "planet", "astronomy", "cosmic"],
-        image: '/images/space.jpg',
+        id: 'night',
+        keywords: ["alone", "dark", "night", "lonely", "sad", "thinking", "quiet", "shadows", "melancholy"],
+        image: '/images/night.jpg',
         replies: [
-            "Your consciousness is reaching for the stars. To dream of space is to touch the infinite.",
-            "In the cosmic silence, you realize that you are both the dreamer and the universe itself."
-        ]
-    },
-    {
-        id: 'sky',
-        keywords: ["sky", "clouds", "air", "summit", "flying", "atmosphere"],
-        image: '/images/sky.jpg',
-        replies: [
-            "Total freedom. Soaring through the clouds signifies your ability to rise above current challenges.",
-            "The golden sky of your mind represents clarity and the promise of a peaceful new perspective."
-        ]
-    },
-    {
-        id: 'snake',
-        keywords: ["snake", "cobra", "serpent", "python", "reptile"],
-        image: '/images/snake.jpg',
-        replies: [
-            "A snake in a dream often represents transformation or hidden fears surfacing to be healed.",
-            "The serpent is an ancient symbol of shedding the old and awakening to a new wisdom."
-        ]
-    },
-    {
-        id: 'lion',
-        keywords: ["lion", "tiger", "wild animal", "roar", "predator"],
-        image: '/images/lion.jpg',
-        replies: [
-            "The roar of a lion signifies your own untamed power and the courage needed to face a challenge.",
-            "Meeting a wild predator in the dream realm reflects a situation in life where you must stand your ground."
-        ]
-    },
-    {
-        id: 'dog',
-        keywords: ["dog", "puppy", "pet", "barking", "hound"],
-        image: '/images/dog.jpg',
-        replies: [
-            "A loyal companion in a dream reflects your own loyalty and the importance of trust in your relationships.",
-            "A friendly dog represents protection and the simple joys of unconditional love."
-        ]
-    },
-    {
-        id: 'bird',
-        keywords: ["bird", "eagle", "flying bird", "wings", "soaring", "feather"],
-        image: '/images/bird.jpg',
-        replies: [
-            "Birds are messengers from your higher self. An eagle's flight suggests taking a wider view of your life.",
-            "To see wings in your dream is to acknowledge your own desire for spiritual or creative freedom."
-        ]
-    },
-    {
-        id: 'shiva',
-        keywords: ["shiv", "shiva", "mahadev", "bholenath", "adishakti"],
-        image: '/images/shiva.jpg',
-        replies: [
-            "The presence of Lord Shiva represents the dance of destruction and creation—the power of transformation.",
-            "Gazing upon Mahadev suggests you are seeking stillness and a deep connection to the eternal."
-        ]
-    },
-    {
-        id: 'radha-krishna',
-        keywords: ["krishna", "radha", "radha krishna", "love divine", "flute", "vrindavan"],
-        image: '/images/radha-krishna.jpg',
-        replies: [
-            "Glimpsing Radha and Krishna in your dreams represents the ultimate union of the individual soul with the divine love.",
-            "The sound of the flute in Vrindavan is a call to return to your truest, most joyful state of being."
-        ]
-    },
-    {
-        id: 'god',
-        keywords: ["vishnu", "krishna", "ram", "god", "temple", "divine", "blessing", "deity", "spiritual"],
-        image: '/images/god.jpg',
-        replies: [
-            "Stepping into a temple or meeting the divine represents a search for ultimate truth and inner peace.",
-            "A blessing in the dream realm signifies that you are protected and guided on your path."
-        ]
-    },
-    {
-        id: 'chase',
-        keywords: ["chasing", "running", "escape", "danger", "running away", "following me"],
-        image: '/images/chase.jpg',
-        replies: [
-            "Being chased reflects something in your waking life that you are not yet ready to confront.",
-            "The act of running in a dream suggests an urgency to move forward or a fear of being held back."
-        ]
-    },
-    {
-        id: 'fall',
-        keywords: ["falling", "fall", "height", "cliff", "drop", "stumble"],
-        image: '/images/fall.jpg',
-        replies: [
-            "Falling represents a loss of control or a fear of failure. It is an invitation to let go and trust the path.",
-            "The sensation of falling often precedes a shift in consciousness—a descent into deeper understanding."
-        ]
-    },
-    {
-        id: 'fire',
-        keywords: ["fire", "burning", "explosion", "flames", "smoke", "heat"],
-        image: '/images/fire.jpg',
-        replies: [
-            "Fire is a powerful symbol of purification. It burns away the old to make room for the new.",
-            "An explosion in the dream realm reflects intense emotions or a sudden breakthrough in your waking life."
-        ]
-    },
-    {
-        id: 'horror',
-        keywords: ["dark", "ghost", "horror", "scary", "monster", "nightmare", "demon", "creepy"],
-        image: '/images/horror.jpg',
-        replies: [
-            "Encountering shadows in your dream is a way of integrating your fears into your strength.",
-            "A scary vision is often a doorway; once you face the monster, it loses its power over you."
+            "The quiet dark is a space for deep reflection. It is where you meet your most honest self.",
+            "Being alone under the night sky represents the peace that comes when you embrace your own depths."
         ]
     }
 ];
 
+import Dream from '../models/Dream.js';
+
 export const chatWithAI = async (req, res, next) => {
     try {
         const { messages } = req.body;
-
+        
         if (!messages || messages.length === 0) {
             return res.status(400).json({ error: 'Messages are required' });
         }
@@ -258,7 +260,10 @@ export const chatWithAI = async (req, res, next) => {
         
         // Find the category with the most keyword matches (or first match)
         for (const category of DREAM_CATEGORIES) {
-            const hasMatch = category.keywords.some(kw => lowerText.includes(kw));
+            const hasMatch = category.keywords.some(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'i');
+                return regex.test(lowerText);
+            });
             if (hasMatch) {
                 selectedCategory = category;
                 break; // Use the first strong category match
@@ -275,7 +280,24 @@ export const chatWithAI = async (req, res, next) => {
             reply = replyOptions[Math.floor(Math.random() * replyOptions.length)];
         }
 
-        // --- 3. RESPONSE ---
+        // --- 3. PERSISTENCE ---
+        // Save to real history if an image was created
+        if (selectedImage && req.user && req.user.id) {
+            try {
+                const newDream = new Dream({
+                    userId: req.user.id,
+                    title: rawText.length > 30 ? rawText.substring(0, 30) + "..." : rawText,
+                    description: rawText,
+                    imageUrl: selectedImage,
+                    interpretation: reply
+                });
+                await newDream.save();
+            } catch (err) {
+                console.error("Failed to save dream to history:", err);
+            }
+        }
+
+        // --- 4. RESPONSE ---
         setTimeout(() => {
             res.status(200).json({ 
                 reply, 

@@ -48,12 +48,7 @@ export const signin = async (req, res, next) => {
 
         const { password: pass, ...rest } = validUser._doc;
 
-        res.status(200)
-            .cookie('access_token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-            })
-            .json(rest);
+        res.status(200).json({ ...rest, token });
     } catch (error) {
         next(error);
     }
@@ -61,7 +56,7 @@ export const signin = async (req, res, next) => {
 
 export const signout = (req, res, next) => {
     try {
-        res.clearCookie('access_token').status(200).json('User has been signed out');
+        res.status(200).json('User has been signed out');
     } catch (error) {
         next(error);
     }

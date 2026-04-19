@@ -2,17 +2,16 @@ import jwt from 'jsonwebtoken';
 import { errorHandler } from './error.js';
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.access_token;
-    console.log('Cookies received:', req.cookies);
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-        console.log('No access_token found');
-        return next(errorHandler(401, 'Unauthorized'));
+        return next(errorHandler(401, 'Unauthorized: No token provided'));
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            return next(errorHandler(401, 'Unauthorized'));
+            return next(errorHandler(401, 'Unauthorized: Invalid token'));
         }
         req.user = user;
         next();
