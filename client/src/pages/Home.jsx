@@ -4,6 +4,11 @@ import { Sparkles, ArrowRight, Brain, Palette, MessageCircle, Zap, Star, Chevron
 import { useTheme } from '../hooks/useTheme';
 import { FadeIn, StaggerChildren, StaggerItem } from '../components/AnimationWrappers';
 import PublicLayout from '../layouts/PublicLayout';
+import TestimonialMarquee from '../components/TestimonialMarquee';
+import ctaPortalImg from '../assets/cta_portal.png';
+import feature1Img from '../assets/feature1.png';
+import feature2Img from '../assets/feature2.png';
+import feature3Img from '../assets/feature3.png';
 
 // Animated chatbot preview
 function ChatPreview({ dark }) {
@@ -96,21 +101,21 @@ function ChatPreview({ dark }) {
 
 const features = [
   {
-    icon: Brain,
+    image: feature1Img,
     title: 'AI Dream Analysis',
     desc: 'Advanced neural networks interpret the hidden meanings and emotional undertones within your dreams.',
     color: 'from-violet-500 to-purple-600',
     glow: 'shadow-[0_0_30px_rgba(124,58,237,0.3)]',
   },
   {
-    icon: Palette,
+    image: feature2Img,
     title: 'Visual Generation',
     desc: 'Transform abstract dream narratives into stunning, high-fidelity visual artwork in seconds.',
     color: 'from-cyan-500 to-blue-600',
     glow: 'shadow-[0_0_30px_rgba(6,182,212,0.3)]',
   },
   {
-    icon: MessageCircle,
+    image: feature3Img,
     title: 'Conversational Refinement',
     desc: 'Engage in natural dialogue with QuickRaina to refine and perfect your dream visualization.',
     color: 'from-pink-500 to-rose-600',
@@ -246,20 +251,27 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          <StaggerChildren className="grid md:grid-cols-3 gap-6" staggerDelay={0.15}>
-            {features.map(({ icon: Icon, title, desc, color, glow }) => (
+          <StaggerChildren className="grid md:grid-cols-3 gap-8" staggerDelay={0.15}>
+            {features.map(({ image, title, desc, glow }) => (
               <StaggerItem key={title}>
                 <div
-                  className={`relative group p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-2 hover:${glow} ${
+                  className={`relative group p-4 pb-8 rounded-3xl border transition-all duration-500 hover:-translate-y-2 hover:${glow} ${
                     dark ? 'bg-[#12121a] border-white/8 hover:border-violet-500/30' : 'bg-white border-slate-200 hover:border-violet-300 shadow-sm hover:shadow-lg'
                   }`}
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <Icon className="w-7 h-7 text-white" />
+                  <div className="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3]">
+                    <img 
+                      src={image} 
+                      alt={title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#12121a]/60 to-transparent pointer-events-none" />
                   </div>
-                  <h3 className={`font-display text-xl font-bold mb-3 ${dark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
-                  <p className={`text-sm leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{desc}</p>
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-600/3 to-cyan-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="px-4">
+                    <h3 className={`font-display text-2xl font-bold mb-3 ${dark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
+                    <p className={`text-sm leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{desc}</p>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </StaggerItem>
             ))}
@@ -267,101 +279,203 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Preview */}
-      <section className={`py-24 ${dark ? 'bg-[#0d0d16]' : 'bg-slate-50'}`}>
+      {/* How It Works - Visual Step-by-Step */}
+      <section className={`py-24 relative overflow-hidden ${dark ? 'bg-[#0d0d16]' : 'bg-slate-50'}`}>
+        {/* Background Accents */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn className="text-center mb-16">
-            <h2 className={`font-display text-4xl sm:text-5xl font-bold mb-4 ${dark ? 'text-white' : 'text-slate-900'}`}>
+          <FadeIn className="text-center mb-20">
+            <h2 className={`font-display text-4xl sm:text-6xl font-bold mb-6 ${dark ? 'text-white' : 'text-slate-900'}`}>
               <span className="gradient-text">Three steps</span> to your dream
             </h2>
-            <p className={`text-lg ${dark ? 'text-slate-400' : 'text-slate-600'}`}>From thought to visual in under a minute.</p>
+            <p className={`text-xl max-w-2xl mx-auto ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+              We've refined our process to be as fluid and intuitive as the dreams themselves.
+            </p>
           </FadeIn>
 
-          <StaggerChildren className="grid md:grid-cols-3 gap-8" staggerDelay={0.2}>
-            {[
-              { step: '01', title: 'Describe Your Dream', desc: 'Tell QuickRaina about your dream in natural language — no special vocabulary needed.' },
-              { step: '02', title: 'AI Asks & Refines', desc: 'Our AI engages in a thoughtful dialogue to capture every nuance and detail.' },
-              { step: '03', title: 'Visual Magic Happens', desc: 'Watch as your dream transforms into a stunning visual representation in real time.' },
-            ].map(({ step, title, desc }) => (
-              <StaggerItem key={step}>
-                <div className="text-center">
-                  <div className="font-display text-6xl font-black gradient-text mb-4">{step}</div>
-                  <h3 className={`text-xl font-bold mb-3 ${dark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
-                  <p className={`text-sm leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{desc}</p>
+          <div className="space-y-32">
+            {/* Step 1 */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <FadeIn direction="left">
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-gradient-to-r from-violet-600/20 to-transparent rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <img 
+                      src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200" 
+                      alt="Describe Your Dream" 
+                      className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#0d0d16] via-transparent to-transparent" />
+                    <div className="absolute bottom-8 left-8">
+                      <div className="font-display text-6xl font-black text-white/10 leading-none">01</div>
+                    </div>
+                  </div>
                 </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
+              </FadeIn>
+              <FadeIn direction="right">
+                <div className="space-y-6">
+                  <div className="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                    <Star className="w-6 h-6 text-violet-400" />
+                  </div>
+                  <h3 className={`font-display text-4xl font-bold ${dark ? 'text-white' : 'text-slate-900'}`}>Describe Your Dream</h3>
+                  <p className={`text-lg leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Open your mind and describe what you experienced. Whether it's a fleeting image or a complex narrative, QuickRaina understands natural language perfectly. No prompts, no codes—just your story.
+                  </p>
+                  <ul className={`space-y-3 text-sm ${dark ? 'text-slate-500' : 'text-slate-500'}`}>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-violet-500" /> Support for 50+ languages</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-violet-500" /> No character limits</li>
+                  </ul>
+                </div>
+              </FadeIn>
+            </div>
 
-          <FadeIn delay={0.4} className="mt-12 text-center">
+            {/* Step 2 */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <FadeIn direction="right" className="lg:order-2">
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-gradient-to-l from-cyan-600/20 to-transparent rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <img 
+                      src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" 
+                      alt="AI Refinement" 
+                      className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tl from-[#0d0d16] via-transparent to-transparent" />
+                    <div className="absolute bottom-8 left-8">
+                      <div className="font-display text-6xl font-black text-white/10 leading-none">02</div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+              <FadeIn direction="left" className="lg:order-1">
+                <div className="space-y-6">
+                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-cyan-400" />
+                  </div>
+                  <h3 className={`font-display text-4xl font-bold ${dark ? 'text-white' : 'text-slate-900'}`}>AI Asks & Refines</h3>
+                  <p className={`text-lg leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Our advanced neural engines don't just "read" your dream—they feel it. QuickRaina engages in a thoughtful dialogue, asking about textures, lights, and emotions to ensure the visual interpretation is perfect.
+                  </p>
+                  <ul className={`space-y-3 text-sm ${dark ? 'text-slate-500' : 'text-slate-500'}`}>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> Context-aware dialogue</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> Emotional mapping</li>
+                  </ul>
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Step 3 */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <FadeIn direction="left">
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-gradient-to-r from-pink-600/20 to-transparent rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <img 
+                      src="https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1200" 
+                      alt="Visual Magic" 
+                      className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#0d0d16] via-transparent to-transparent" />
+                    <div className="absolute bottom-8 left-8">
+                      <div className="font-display text-6xl font-black text-white/10 leading-none">03</div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+              <FadeIn direction="right">
+                <div className="space-y-6">
+                  <div className="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-pink-400" />
+                  </div>
+                  <h3 className={`font-display text-4xl font-bold ${dark ? 'text-white' : 'text-slate-900'}`}>Visual Magic Happens</h3>
+                  <p className={`text-lg leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    The final step is the reveal. Watch as your subconscious takes form in breathtaking 4K resolution. From abstract landscapes to hyper-realistic scenes, the results are as unique as your dreams.
+                  </p>
+                  <ul className={`space-y-3 text-sm ${dark ? 'text-slate-500' : 'text-slate-500'}`}>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-pink-500" /> 4K Ultra-HD Resolution</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-pink-500" /> Reality Score analysis</li>
+                  </ul>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+
+          <FadeIn delay={0.4} className="mt-24 text-center">
             <Link
-              to="/how-it-works"
-              className="inline-flex items-center gap-2 text-violet-400 font-semibold hover:text-violet-300 transition-colors"
+              to="/signup"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-bold text-lg hover:shadow-[0_0_30px_rgba(124,58,237,0.4)] hover:scale-105 transition-all duration-300"
             >
-              See the full process <ChevronRight className="w-4 h-4" />
+              Start Your First Journey <ArrowRight className="w-5 h-5" />
             </Link>
           </FadeIn>
         </div>
       </section>
 
       {/* Testimonials Preview */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn className="text-center mb-16">
-            <h2 className={`font-display text-4xl sm:text-5xl font-bold mb-4 ${dark ? 'text-white' : 'text-slate-900'}`}>
-              Loved by <span className="gradient-text">dreamers worldwide</span>
-            </h2>
-          </FadeIn>
+      <TestimonialMarquee />
 
-          <StaggerChildren className="grid md:grid-cols-3 gap-6" staggerDelay={0.15}>
-            {[
-              { name: 'Aria Chen', role: 'Digital Artist', text: 'QuickRaina turned my recurring dream into the most beautiful piece of art I\'ve ever seen. It literally made me cry.', rating: 5 },
-              { name: 'Marcus Rivera', role: 'Therapist', text: 'I use QuickRaina with my clients to help them externalize their subconscious. The results are consistently profound.', rating: 5 },
-              { name: 'Priya Nair', role: 'Creative Writer', text: 'The AI doesn\'t just generate images — it understands the emotional core of your dreams. Truly remarkable technology.', rating: 5 },
-            ].map(({ name, role, text, rating }) => (
-              <StaggerItem key={name}>
-                <div className={`p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-                  dark ? 'bg-[#12121a] border-white/8' : 'bg-white border-slate-200 shadow-sm'
-                }`}>
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: rating }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                    ))}
-                  </div>
-                  <p className={`text-sm leading-relaxed mb-5 ${dark ? 'text-slate-300' : 'text-slate-700'}`}>"{text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-400 flex items-center justify-center text-white text-sm font-bold">
-                      {name[0]}
-                    </div>
-                    <div>
-                      <div className={`text-sm font-semibold ${dark ? 'text-white' : 'text-slate-900'}`}>{name}</div>
-                      <div className={`text-xs ${dark ? 'text-slate-500' : 'text-slate-500'}`}>{role}</div>
-                    </div>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section>
-
-      {/* CTA Banner */}
-      <section className="py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Unique Dream Portal CTA */}
+      <section className="py-24 px-4">
+        <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <div className="relative rounded-3xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600 to-cyan-500" />
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/50 to-transparent" />
-              <div className="relative px-10 py-16 text-center text-white">
-                <Sparkles className="w-12 h-12 mx-auto mb-6 opacity-80" />
-                <h2 className="font-display text-4xl sm:text-5xl font-bold mb-4">Ready to explore your dreams?</h2>
-                <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto">Join thousands of dreamers who've already unlocked the power of AI visualization.</p>
-                <Link
-                  to="/signup"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-violet-700 font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+            <div className="relative group rounded-[2.5rem] overflow-hidden shadow-[0_0_50px_rgba(124,58,237,0.2)]">
+              {/* Background Portal Image */}
+              <div className="absolute inset-0">
+                <img 
+                  src={ctaPortalImg} 
+                  alt="Dream Portal" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t ${dark ? 'from-[#0a0a0f] via-[#0a0a0f]/40' : 'from-slate-900 via-slate-900/40'} to-transparent`} />
+              </div>
+
+              {/* Glowing Accents */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/20 blur-[100px] -mr-32 -mt-32" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/20 blur-[100px] -ml-32 -mb-32" />
+
+              {/* Content */}
+              <div className="relative px-8 py-20 sm:p-20 text-center flex flex-col items-center">
+                <motion.div 
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                  className="mb-8"
                 >
-                  Start Visualizing Free <ArrowRight className="w-4 h-4" />
-                </Link>
+                  <div className="w-20 h-20 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center p-2">
+                    <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                      <Sparkles className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                </motion.div>
+
+                <h2 className="font-display text-4xl sm:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                  Ready to transcend <br className="hidden sm:block" /> 
+                  your <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-300">imagination?</span>
+                </h2>
+                
+                <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+                  Step into the portal and witness the manifestation of your subconscious. 
+                  Your dreams are waiting to be realized in stunning 4K visualization.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-center gap-5">
+                  <Link
+                    to="/signup"
+                    className="group relative px-10 py-5 rounded-2xl bg-white text-violet-800 font-bold text-lg hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300 overflow-hidden"
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      Enter the Portal <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-violet-100 to-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                  
+                  <span className="text-white/40 text-sm font-medium">Joined by 10,000+ dreamers today</span>
+                </div>
+
+                {/* Glassmorphic border */}
+                <div className="absolute inset-px rounded-[2.5rem] border border-white/10 pointer-events-none" />
               </div>
             </div>
           </FadeIn>
