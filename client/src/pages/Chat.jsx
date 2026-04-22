@@ -26,16 +26,78 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { API_BASE_URL } from '../config';
 
+function PollinationsImage({ imageUrl }) {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [src, setSrc] = useState(imageUrl);
+  const MAX_RETRIES = 5;
+  const RETRY_DELAY_MS = 6000; // 6 seconds between retries
+
+  const handleError = () => {
+    if (retryCount < MAX_RETRIES) {
+      console.log(`DEBUG: Image load failed. Retry ${retryCount + 1}/${MAX_RETRIES} in ${RETRY_DELAY_MS / 1000}s...`);
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1);
+        // Cache-bust so browser actually re-fetches
+        setSrc(`${imageUrl}&retry=${Date.now()}`);
+      }, RETRY_DELAY_MS);
+    } else {
+      console.error('DEBUG: Image permanently failed after all retries:', imageUrl);
+      setImgError(true);
+    }
+  };
+
+  return (
+    <div className="mt-4 relative w-full group">
+      <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/30 to-cyan-500/30 rounded-[2rem] blur-lg"></div>
+      <div className="relative rounded-[1.8rem] overflow-hidden border border-white/10 bg-[#0a0a0f] shadow-2xl">
+
+        {/* Loading skeleton — shown while generating or retrying */}
+        {!imgLoaded && !imgError && (
+          <div className="w-full aspect-square flex flex-col items-center justify-center bg-[#0f0f1a] gap-3">
+            <div className="w-10 h-10 rounded-full border-2 border-violet-500 border-t-transparent animate-spin"></div>
+            <p className="text-xs text-slate-500">
+              {retryCount === 0
+                ? 'Generating your dream vision...'
+                : `Still generating... (attempt ${retryCount + 1}/${MAX_RETRIES + 1})`}
+            </p>
+          </div>
+        )}
+
+        {/* Final error fallback — only shown after all retries */}
+        {imgError && (
+          <div className="w-full aspect-square flex flex-col items-center justify-center bg-slate-900 gap-3">
+            <Sparkles className="w-8 h-8 text-violet-500/50" />
+            <p className="text-xs text-slate-400 text-center px-4">
+              Pollinations is busy right now. Try sending your dream again.
+            </p>
+          </div>
+        )}
+
+        {/* Actual image */}
+        <img
+          src={src}
+          alt="Dream visualization"
+          className={`w-full h-auto aspect-square object-cover transition-opacity duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'}`}
+          loading="eager"
+          onLoad={() => { console.log('DEBUG: Image loaded successfully:', src); setImgLoaded(true); }}
+          onError={handleError}
+        />
+
+        {imgLoaded && (
+          <div className="absolute top-4 right-4 px-2 py-1 bg-black/50 backdrop-blur-md rounded border border-white/10">
+            <span className="text-[9px] text-violet-300 font-bold uppercase tracking-widest">AI Vision</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ChatMessage({ msg, dark }) {
   const isUser = msg.role === 'user';
   const [copied, setCopied] = useState(false);
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [imgError, setImgError] = useState(false);
-
-  // Debug: log every time a message with an image is rendered
-  if (msg.image) {
-    console.log('DEBUG ChatMessage: rendering image URL =>', msg.image);
-  }
 
   const formatTimestamp = (date) => {
     return new Intl.DateTimeFormat('en-US', {
@@ -91,46 +153,9 @@ function ChatMessage({ msg, dark }) {
           </button>
         </div>
 
-        {/* Generated Image Block */}
-        {msg.image && (
-          <div className="mt-4 relative w-full group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/30 to-cyan-500/30 rounded-[2rem] blur-lg"></div>
-            <div className="relative rounded-[1.8rem] overflow-hidden border border-white/10 bg-[#0a0a0f] shadow-2xl">
-              
-              {/* Loading skeleton shown while Pollinations generates the image */}
-              {!imgLoaded && !imgError && (
-                <div className="w-full aspect-square flex flex-col items-center justify-center bg-[#0f0f1a] gap-3">
-                  <div className="w-10 h-10 rounded-full border-2 border-violet-500 border-t-transparent animate-spin"></div>
-                  <p className="text-xs text-slate-500">Generating your dream vision...</p>
-                </div>
-              )}
+        {/* Generated Image Block — handled by PollinationsImage with retry logic */}
+        {msg.image && <PollinationsImage imageUrl={msg.image} />}
 
-              {/* Error fallback */}
-              {imgError && (
-                <div className="w-full aspect-square flex flex-col items-center justify-center bg-slate-900 gap-3">
-                  <Sparkles className="w-8 h-8 text-violet-500/50" />
-                  <p className="text-xs text-slate-400">Image generation timed out. Try describing your dream again.</p>
-                </div>
-              )}
-
-              {/* Actual image */}
-              <img 
-                src={msg.image}
-                alt="Dream visualization"
-                className={`w-full h-auto aspect-square object-cover transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'}`}
-                loading="eager"
-                onLoad={() => setImgLoaded(true)}
-                onError={() => { console.error('Image failed to load:', msg.image); setImgError(true); }}
-              />
-
-              {imgLoaded && (
-                <div className="absolute top-4 right-4 px-2 py-1 bg-black/50 backdrop-blur-md rounded border border-white/10">
-                  <span className="text-[9px] text-violet-300 font-bold uppercase tracking-widest">AI Vision</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
         <span className={`text-xs mt-1 px-1 ${dark ? 'text-slate-600' : 'text-slate-400'}`}>
           {formatTimestamp(msg.timestamp)}
