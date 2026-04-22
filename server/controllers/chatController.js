@@ -23,14 +23,16 @@ export const chatWithAI = async (req, res, next) => {
             });
         }
 
-        // --- 2. UNDERSTAND DREAM & ENHANCE PROMPT ---
-        let reply = "That sounds like a fascinating vision. Dreams often use these symbols to help us process the complexities of our waking lives. What stood out to you most?";
-        let enhancedPrompt = `${rawText}, surreal, dreamlike, cinematic lighting, masterpiece, highly detailed, vivid colors`;
+        // --- 2. ENHANCE PROMPT FOR IMAGE GENERATION ---
+        const reply = "✨ Your dream has been visualized below.";
+        const enhancedPrompt = `${rawText}, highly detailed digital painting, cinematic lighting, dramatic atmosphere, ultra HD, 8K, masterpiece, vivid colors, ethereal dreamlike quality, surreal, professional concept art`;
 
         // --- 3. GENERATE POLLINATIONS AI IMAGE URL ---
         const encodedPrompt = encodeURIComponent(enhancedPrompt);
         const randomSeed = Math.floor(Math.random() * 1000000);
         const selectedImage = `https://image.pollinations.ai/prompt/${encodedPrompt}?seed=${randomSeed}&width=1024&height=1024&nologo=true`;
+
+        console.log('DEBUG Backend: Generated Pollinations URL =>', selectedImage);
 
         // --- 4. PERSISTENCE ---
         if (req.user && req.user.id) {
