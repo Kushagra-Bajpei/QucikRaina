@@ -209,7 +209,6 @@ const Chat = () => {
     const userMsg = { id: generateId(), role: 'user', text: input, timestamp: new Date() };
     const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
-    const currentInput = input;
     setInput('');
     setIsLoading(true);
 
@@ -217,6 +216,8 @@ const Chat = () => {
       if (!user?.token) {
         throw new Error('No authentication token found. Please log in again.');
       }
+
+      console.log('DEBUG: Sending messages to backend...', updatedMessages);
 
       const response = await fetch(`${API_BASE_URL}/api/chat/send`, {
         method: 'POST',
@@ -231,13 +232,16 @@ const Chat = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('DEBUG: Received response from backend:', data);
+
         const aiMsg = { 
           id: generateId(), 
           role: 'ai', 
-          text: data.reply, 
-          image: data.image,
+          text: data.reply || "I received your vision.", 
+          image: data.image || null, // Explicit fallback
           timestamp: new Date() 
         };
+
         const finalMessages = [...updatedMessages, aiMsg];
         setMessages(finalMessages);
         saveChatToDB(finalMessages);
@@ -250,6 +254,7 @@ const Chat = () => {
           id: generateId(), 
           role: 'ai', 
           text: errorText, 
+          image: null,
           timestamp: new Date() 
         };
         setMessages(prev => [...prev, errorMsg]);
@@ -260,6 +265,7 @@ const Chat = () => {
         id: generateId(), 
         role: 'ai', 
         text: error.message || "Connection error. Please check your internet or re-login.", 
+        image: null,
         timestamp: new Date() 
       }]);
     } finally {
