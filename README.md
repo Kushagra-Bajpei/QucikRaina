@@ -12,19 +12,13 @@
 
 ## 🖼️ Project Showcases
 
-> [!TIP]
-> **To add your own images:**
-> 1. Take screenshots of your project.
-> 2. Create an `assets` folder in the root or upload them to an image hosting service (like Imgur or GitHub Issues).
-> 3. Replace the placeholder URLs below with your image paths.
-
 | Home Page | AI Chat Interface |
 | :---: | :---: |
 | ![Home Page](./assets/Home.png) | ![Chat Interface](./assets/Chat.png) |
 
-| Features Section | Authentication |
-| :---: | :---: |
-| ![Features Section](./assets/Features.png) | ![Auth Page](./assets/Auth.png) |
+| Authentication |
+| :---: |
+| ![Auth Page](./assets/Auth.png) |
 
 ---
 
