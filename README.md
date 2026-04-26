@@ -1,36 +1,62 @@
 # ✨ QuickRaina: AI Dream Visualization Platform
 
-**QuickRaina** is a full-stack MERN application designed to turn your dreams into vivid visual and poetic interpretations. Using advanced keyword matching and AI-driven logic, users can explore their subconscious through a premium, interactive chat interface.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+
+**QuickRaina** is a premium full-stack MERN application that transforms the ethereal world of dreams into vivid visual and poetic interpretations. Leveraging AI-driven logic and a futuristic interface, users can explore their subconscious through a sophisticated chat experience.
+
+---
+
+## 🖼️ Project Showcases
+
+> [!TIP]
+> **To add your own images:**
+> 1. Take screenshots of your project.
+> 2. Create an `assets` folder in the root or upload them to an image hosting service (like Imgur or GitHub Issues).
+> 3. Replace the placeholder URLs below with your image paths.
+
+| Home Page | AI Chat Interface |
+| :---: | :---: |
+| ![Home Page Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Home+Page+Screenshot) | ![Chat Interface Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Chat+Interface+Screenshot) |
+
+| Features Section | Authentication |
+| :---: | :---: |
+| ![Features Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Features+Screenshot) | ![Auth Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Login+Screenshot) |
 
 ---
 
 ## 🚀 Key Features
 
-- **AI Dream Visualization**: Input your dream descriptions and receive a matched high-quality visualization along with a poetic interpretation of your symbols.
-- **Persistent Chat History**: Unlike standard chatbots, QuickRaina saves your entire conversation thread to MongoDB. You can revisit, rename, or delete past explorations anytime.
-- **Advanced Authentication**: Secure JWT-based authentication system using Bearer tokens. Supports both guest exploration and persistent user sessions.
-- **Dynamic Matching Engine**: A robust regex-based keyword engine that matches dream archetypes (like Horror, Spiritual, Animal, etc.) to specific high-fidelity images.
-- **Modern UI/UX**:
-  - Futuristic dark-themed aesthetic with glassmorphism.
-  - Smooth animations powered by Framer Motion.
-  - Fully responsive design with a collapsible sidebar.
-  - Real-time dark/light mode toggling.
+- **🧠 AI Dream Visualization**: Enter your dream descriptions and receive a matched high-quality visualization along with a poetic interpretation of your symbols.
+- **💬 Persistent Chat History**: Integrated with MongoDB to save, rename, and manage your entire conversation history.
+- **🔐 Secure Authentication**: Robust JWT-based system with protected routes and persistent user sessions.
+- **🎨 Premium UI/UX**:
+  - Futuristic dark-themed aesthetic with **Glassmorphism**.
+  - Smooth micro-animations powered by **Framer Motion**.
+  - Responsive layout with a collapsible sidebar and intuitive navigation.
+- **🌗 Theme Intelligence**: Supports dynamic theme switching and real-time UI updates.
+- **🛡️ Full-Featured Pages**: Includes Home, About, How It Works, Testimonials, Contact, Pricing, and a comprehensive Blog.
 
 ---
 
 ## 🛠️ Technology Stack
 
 ### **Frontend**
-- **React (Vite)**: For a lightning-fast development experience and optimized builds.
-- **Tailwind CSS**: Modern utility-first styling for a custom, premium look.
-- **Framer Motion**: Smooth page transitions and micro-animations.
-- **Lucide React**: Beautiful, consistent iconography.
+- **React (Vite)**: Lightning-fast development and optimized production builds.
+- **Tailwind CSS v4**: Advanced utility-first styling for a sleek, modern look.
+- **Framer Motion**: High-performance animations and transitions.
+- **React Router Dom**: Client-side routing for a seamless SPA experience.
+- **Lucide React**: Premium iconography.
 
 ### **Backend**
-- **Node.js & Express**: Scalable server architecture.
-- **MongoDB & Mongoose**: Persistent storage for user data and chat histories.
-- **JSON Web Token (JWT)**: Secure, stateless authentication.
-- **Dotenv**: Environment variable management for API keys and secrets.
+- **Node.js & Express**: High-performance server-side logic.
+- **MongoDB & Mongoose**: Scalable NoSQL database for users and chat data.
+- **JSON Web Token (JWT)**: Secure, stateless authentication via Bearer tokens.
+- **BcryptJS**: Industry-standard password hashing.
+- **CORS & Cookie Parser**: Secure cross-origin resource sharing and cookie handling.
 
 ---
 
@@ -38,19 +64,20 @@
 
 ```bash
 QuickRAINA/
-├── client/          # Vite + React Frontend
+├── client/              # Vite + React Frontend
 │   ├── src/
-│   │   ├── components/  # Reusable UI components
-│   │   ├── pages/       # Page-level components (Chat, Home, Login, etc.)
+│   │   ├── components/  # Reusable UI components (Sidebar, Navbar, etc.)
+│   │   ├── pages/       # Page components (Home, Chat, Login, Blog, etc.)
 │   │   ├── hooks/       # Custom hooks (Auth, Theme)
-│   │   └── App.jsx      # Main application logic
-│   └── public/images/   # High-fidelity dream visualization assets
-└── server/          # Node.js + Express Backend
-    ├── controllers/ # Business logic (Chat, Auth, History)
-    ├── models/      # Mongoose schemas (User, Chat, Dream)
-    ├── routes/      # API endpoints
-    ├── middleware/  # JWT verification and error handling
-    └── index.js     # Server entry point
+│   │   └── App.jsx      # Main application routing
+│   └── public/          # Static assets and dream images
+└── server/              # Node.js + Express Backend
+    ├── config/          # Database configuration
+    ├── controllers/     # API business logic
+    ├── models/          # Mongoose schemas (User, Chat, Dream)
+    ├── routes/      # API endpoint definitions
+    ├── middleware/      # JWT auth and error handling
+    └── index.js         # Server entry point
 ```
 
 ---
@@ -58,54 +85,78 @@ QuickRAINA/
 ## ⚙️ Setup & Installation
 
 ### **Prerequisites**
-- Node.js (v18 or higher)
-- MongoDB account (Atlas or local)
+- **Node.js** (v18 or higher)
+- **MongoDB** (Local or Atlas instance)
 
-### **1. Clone the repository**
+### **1. Clone & Install**
 ```bash
 git clone <your-repo-url>
 cd QuickRAINA
-```
 
-### **2. Backend Setup**
-Navigate to the `server` folder:
-```bash
+# Install Backend Dependencies
 cd server
 npm install
-```
-Create a `.env` file in the `server` directory and add:
-```env
-PORT=5000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
-Start the backend:
-```bash
-npm run dev
-```
 
-### **3. Frontend Setup**
-Navigate to the `client` folder:
-```bash
+# Install Frontend Dependencies
 cd ../client
 npm install
 ```
-Start the frontend:
+
+### **2. Environment Configuration**
+Create a `.env` file in the `server` directory:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+NODE_ENV=development
+```
+
+### **3. Run the Application**
+
+**Start Backend (from `server` folder):**
 ```bash
 npm run dev
 ```
-Open your browser and navigate to `http://localhost:5173`.
+
+**Start Frontend (from `client` folder):**
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`.
 
 ---
 
-## 🔮 Dream Categories Supported
-The platform currently recognizes over 25+ dream archetypes including:
-- **Spiritual**: Vishnu, Shiva, Krishna, God, Temple.
-- **Horror**: Ghosts, Dark Night, Scary, Monsters.
-- **Nature**: Ocean, Forest, Sky, Space, Desert.
-- **Life Events**: Chases, Flying, Falling, Success, Romance.
+## 🔗 API Endpoints (Quick Reference)
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | User Registration |
+| `POST` | `/api/auth/login` | User Login |
+| `GET` | `/api/chat` | Fetch user chat history |
+| `POST` | `/api/dream/analyze` | Submit dream for AI visualization |
+| `GET` | `/api/user/profile` | Get logged-in user details |
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
-This project is for educational and demo purposes as part of the QuickRaina AI project.
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<p align="center">
+  Developed with ❤️ for the Dreamers.
+</p>
