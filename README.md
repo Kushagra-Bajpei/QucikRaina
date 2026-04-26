@@ -20,11 +20,11 @@
 
 | Home Page | AI Chat Interface |
 | :---: | :---: |
-| ![Home Page](./assets/Home.png) | ![Chat Interface Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Chat+Interface+Screenshot) |
+| ![Home Page](./assets/Home.png) | ![Chat Interface](./assets/Chat.png) |
 
 | Features Section | Authentication |
 | :---: | :---: |
-| ![Features Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Features+Screenshot) | ![Auth Placeholder](https://via.placeholder.com/800x450.png?text=QuickRaina+Login+Screenshot) |
+| ![Features Section](./assets/Features.png) | ![Auth Page](./assets/Auth.png) |
 
 ---
 
