@@ -15,7 +15,7 @@ export const saveChat = async (req, res, next) => {
             // Update existing chat
             chat = await Chat.findOneAndUpdate(
                 { _id: chatId, userId },
-                { messages },
+                { messages, title },
                 { returnDocument: 'after' }
             );
         } else {

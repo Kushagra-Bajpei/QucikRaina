@@ -20,8 +20,10 @@ import {
   Mic,
   Settings,
   HelpCircle,
-  Menu
+  Menu,
+  Home
 } from 'lucide-react';
+
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { API_BASE_URL } from '../config';
@@ -415,9 +417,18 @@ const Chat = () => {
               </button>
             </div>
 
-            <div className="px-4 mb-4">
+            <div className="px-4 mb-4 space-y-2">
+              <button 
+                onClick={() => navigate('/')}
+                className={`w-full flex items-center gap-2 px-4 py-3 rounded-xl border transition-all ${dark ? 'border-white/10 hover:bg-white/5 text-slate-300' : 'border-slate-200 hover:bg-slate-50 text-slate-600'}`}
+              >
+                <Home className="w-4 h-4" />
+                <span>Back to Home</span>
+              </button>
+
               <button 
                 onClick={() => {
+
                   setMessages([{ id: generateId(), role: 'ai', text: "Ready for a new exploration. What did you dream about?", timestamp: new Date() }]);
                   setActiveChatId(null);
                 }}
