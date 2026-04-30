@@ -19,6 +19,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
 import ScrollToTop from './components/ScrollToTop';
+import BlogPost from './pages/BlogPost';
+
 
 
 export default function App() {
@@ -39,6 +41,8 @@ export default function App() {
             <Route path="/chat" element={<Chat />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+
             <Route path="/careers" element={<Careers />} />
             <Route path="/changelog" element={<Changelog />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

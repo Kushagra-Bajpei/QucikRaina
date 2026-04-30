@@ -1,83 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, User, Sparkles, Mail, ChevronRight } from 'lucide-react';
+import { ArrowRight, Clock, User, Sparkles, Mail } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { FadeIn, StaggerChildren, StaggerItem } from '../components/AnimationWrappers';
 import PublicLayout from '../layouts/PublicLayout';
-
-const posts = [
-  {
-    slug: '#',
-    category: 'Research',
-    categoryColor: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
-    title: 'The Science of Dream Interpretation: How AI Reads Your Subconscious',
-    excerpt: 'Explore the neuroscience behind dreaming and how modern language models are being trained to decode the symbolic language of the sleeping mind.',
-    author: 'Dr. Maya Lin',
-    date: 'April 15, 2026',
-    readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200',
-    gradient: 'from-violet-500 to-purple-600',
-  },
-  {
-    slug: '#',
-    category: 'Art & Creativity',
-    categoryColor: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
-    title: 'How Digital Artists Are Using QuickRaina to Break Creative Blocks',
-    excerpt: 'A deep dive into the workflows of professional creators who have integrated AI dream visualization into their daily practice.',
-    author: 'Carlos Menem',
-    date: 'April 10, 2026',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200',
-    gradient: 'from-cyan-500 to-blue-600',
-  },
-  {
-    slug: '#',
-    category: 'Wellness',
-    categoryColor: 'text-pink-400 bg-pink-500/10 border-pink-500/20',
-    title: 'Dream Journaling in the Age of AI: A New Approach to Self-Discovery',
-    excerpt: 'How combining traditional dream journaling with AI visualization is helping people gain deeper insight into their emotions and thought patterns.',
-    author: 'Sarah Bloom',
-    date: 'April 4, 2026',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200',
-    gradient: 'from-pink-500 to-rose-600',
-  },
-  {
-    slug: '#',
-    category: 'Product',
-    categoryColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-    title: 'Introducing Multi-Scene Dreams: Visualize Full Dream Narratives',
-    excerpt: 'We\'ve just shipped one of our most requested features — the ability to visualize multiple scenes from a single dream as a cohesive visual sequence.',
-    author: 'QuickRaina Team',
-    date: 'March 28, 2026',
-    readTime: '3 min read',
-    image: 'https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1200',
-    gradient: 'from-amber-500 to-orange-500',
-  },
-  {
-    slug: '#',
-    category: 'Psychology',
-    categoryColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-    title: 'Recurring Dreams and What They Mean: A Therapist\'s Perspective',
-    excerpt: 'Clinical psychologist Dr. Marcus Rivera discusses how recurring dreams signal unresolved emotional experiences and how visualization can aid in processing them.',
-    author: 'Dr. Marcus Rivera',
-    date: 'March 20, 2026',
-    readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=1200',
-    gradient: 'from-emerald-500 to-teal-600',
-  },
-  {
-    slug: '#',
-    category: 'Technology',
-    categoryColor: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
-    title: 'Behind the Model: How QuickRaina\'s AI Understands Dream Symbolism',
-    excerpt: 'A technical deep dive into the architecture and training methodology that powers our dream interpretation engine.',
-    author: 'QuickRaina AI Team',
-    date: 'March 12, 2026',
-    readTime: '10 min read',
-    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200',
-    gradient: 'from-indigo-500 to-blue-600',
-  },
-];
+import { posts } from '../data/blogPosts';
 
 export default function Blog() {
   const { dark } = useTheme();
@@ -141,7 +67,7 @@ export default function Blog() {
                     </span>
                   </div>
                   
-                  <Link to={featured.slug} className="block group/title">
+                  <Link to={`/blog/${featured.slug}`} className="block group/title">
                     <h2 className={`font-display text-3xl lg:text-5xl font-bold mb-6 transition-colors group-hover/title:text-violet-400 leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
                       {featured.title}
                     </h2>
@@ -170,7 +96,7 @@ export default function Blog() {
                     </div>
 
                     <Link 
-                      to={featured.slug}
+                      to={`/blog/${featured.slug}`}
                       className="ml-auto group/btn flex items-center gap-2 text-violet-400 font-bold hover:text-violet-300 transition-colors"
                     >
                       Read Article <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -194,10 +120,10 @@ export default function Blog() {
           </div>
 
           <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" staggerDelay={0.1}>
-            {rest.map(({ slug, category, categoryColor, title, excerpt, author, date, readTime, image }) => (
+            {rest.map(({ slug, category, categoryColor, title, excerpt, author, readTime, image }) => (
               <StaggerItem key={title}>
                 <Link 
-                  to={slug} 
+                  to={`/blog/${slug}`} 
                   className={`group flex flex-col h-full rounded-3xl border overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-violet-500/30 hover:shadow-2xl ${dark ? 'bg-[#12121a] border-white/8 hover:shadow-violet-500/5' : 'bg-white border-slate-200 shadow-sm hover:shadow-xl'}`}
                 >
                   <div className="relative h-56 overflow-hidden">
